@@ -22,6 +22,7 @@ public class Sasa {
         String horizontalLine = "____________________________________________________________";
         ArrayList<Task> tasks = new ArrayList<>();
 
+        loadTasks(tasks);
         System.out.println(horizontalLine);
         System.out.println(" Hello! I'm Sasa\n Your wish is my command");
         System.out.println(horizontalLine);
@@ -164,6 +165,32 @@ public class Sasa {
             fw.close();
         } catch (IOException e) {
             System.out.println(" Error saving: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Loads tasks from the hard disk into the provided list.
+     * If the file does not exist, the method returns without modifying the list.
+     *
+     * @param tasks List to populate with loaded data.
+     */
+    private static void loadTasks(ArrayList<Task> tasks) {
+        File f = FILE_PATH.toFile();
+        if (!f.exists()) return;
+
+        try (Scanner s = new Scanner(f)) {
+            while (s.hasNext()) {
+                String[] p = s.nextLine().split(" \\| ");
+                Task t;
+                if (p[0].equals("T")) t = new Todo(p[2]);
+                else if (p[0].equals("D")) t = new Deadline(p[2], p[3]);
+                else t = new Event(p[2], p[3], p[4]);
+
+                if (p[1].equals("1")) t.markAsDone();
+                tasks.add(t);
+            }
+        } catch (IOException e) {
+            System.out.println(" Error loading data.");
         }
     }
 }
