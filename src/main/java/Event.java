@@ -23,6 +23,19 @@ public class Event extends Task {
         this.to = LocalDateTime.parse(to, INPUT_FORMAT);
     }
 
+    /**
+     * Constructs an Event task from hard disk.
+     *
+     * @param description The description of the event.
+     * @param from The start time/date in LocalDateTime.
+     * @param to The end time/date in LocalDateTime.
+     */
+    public Event(String description, LocalDateTime from, LocalDateTime to) {
+        super(description);
+        this.from = from;
+        this.to = to;
+    }
+
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + from.format(OUTPUT_FORMAT) + " to: " + to.format(OUTPUT_FORMAT) + ")";

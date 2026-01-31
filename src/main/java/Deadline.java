@@ -20,6 +20,17 @@ public class Deadline extends Task {
         this.by = LocalDateTime.parse(by, INPUT_FORMAT);
     }
 
+    /**
+     * Constructs a Deadline task from hard disk.
+     *
+     * @param description The description of the deadline.
+     * @param by The date/time the task is due with LocalDateTime data type.
+     */
+    public Deadline(String description, LocalDateTime by) {
+        super(description);
+        this.by = by;
+    }
+
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by.format(OUTPUT_FORMAT) + ")";
