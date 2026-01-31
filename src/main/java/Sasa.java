@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 /**
  * Main class for the Sasa chatbot
@@ -98,14 +100,17 @@ public class Sasa {
                 }
                 System.out.println(horizontalLine);
             } catch (SasaException e) {
-                System.out.println(" OOPS!!! " + e.getMessage());
+                System.out.println(" OOPSIE! " + e.getMessage());
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
-                System.out.println(" OOPS!!! Please provide a valid task number.");
+                System.out.println(" OOPSIE! Please provide a valid task number.");
+            }
+            catch (java.time.format.DateTimeParseException e) {
+                System.out.println(" OOPSIE! I can't understand that date. Use the format: d/M/yyyy HHmm. \n Example format: 31/1/2025 2359");
             }
         }
 
         System.out.println(horizontalLine);
-        System.out.println(" Bye. Come back when you need me!");
+        System.out.println(" Bye. Come back when you need me again!");
         System.out.println(horizontalLine);
 
         sc.close();
@@ -157,8 +162,12 @@ public class Sasa {
                 int done = t.isTaskDone() ? 1 : 0;
                 String line = type + " | " + done + " | " + t.description;
 
-                if (t instanceof Deadline) line += " | " + ((Deadline) t).by;
-                if (t instanceof Event) line += " | " + ((Event) t).from + " | " + ((Event) t).to;
+                if (t instanceof Deadline) {
+                    line += " | " + ((Deadline) t).by;
+                }
+                if (t instanceof Event) {
+                    line += " | " + ((Event) t).from + " | " + ((Event) t).to;
+                }
 
                 fw.write(line + System.lineSeparator());
             }
@@ -182,11 +191,16 @@ public class Sasa {
             while (s.hasNext()) {
                 String[] p = s.nextLine().split(" \\| ");
                 Task t;
-                if (p[0].equals("T")) t = new Todo(p[2]);
-                else if (p[0].equals("D")) t = new Deadline(p[2], p[3]);
-                else t = new Event(p[2], p[3], p[4]);
-
-                if (p[1].equals("1")) t.markAsDone();
+                if (p[0].equals("T")) {
+                    t = new Todo(p[2]);
+                } else if (p[0].equals("D")) {
+                    t = new Deadline(p[2], LocalDateTime.parse(p[3]));
+                } else {
+                    t = new Event(p[2], LocalDateTime.parse(p[3]), LocalDateTime.parse(p[4]));
+                }
+                if (p[1].equals("1")) {
+                    t.markAsDone();
+                }
                 tasks.add(t);
             }
         } catch (IOException e) {
