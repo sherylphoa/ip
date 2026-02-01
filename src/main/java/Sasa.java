@@ -14,6 +14,11 @@ import java.time.format.DateTimeParseException;
  */
 public class Sasa {
     private static final Path FILE_PATH = Paths.get(".", "data", "sasa.txt");
+    private Ui ui;
+
+    public Sasa() {
+        this.ui = new Ui();
+    }
 
     /**
      * Main entry point for the application.
@@ -21,42 +26,42 @@ public class Sasa {
      * @param args Command line arguments.
      */
     public static void main(String[] args) {
-        String horizontalLine = "____________________________________________________________";
+        // 2. Start the program as an instance
+        new Sasa().run();
+    }
+
+    public void run() {
         ArrayList<Task> tasks = new ArrayList<>();
 
         loadTasks(tasks);
-        System.out.println(horizontalLine);
-        System.out.println(" Hello! I'm Sasa\n Your wish is my command");
-        System.out.println(horizontalLine);
-
-        Scanner sc = new Scanner(System.in);
+        ui.showWelcome();
 
         while (true) {
-            String input = sc.nextLine();
+            String input = ui.readCommand();
 
             if (input.equalsIgnoreCase("bye")) {
                 break;
             }
             try {
-                System.out.println(horizontalLine);
+                ui.showLine();
                 if (input.equalsIgnoreCase("list")) {
-                    System.out.println("Here are your tasks:");
+                    ui.showMessage("Here are your tasks:");
                     for (int i = 0; i < tasks.size(); i++) {
-                        System.out.println(" " + (i + 1) + "." + tasks.get(i));
+                        ui.showMessage(" " + (i + 1) + "." + tasks.get(i));
                     }
                 } else if (input.startsWith("mark")) {
                     int index = Integer.parseInt(input.substring(5)) - 1;
                     checkIndex(index, tasks);
                     tasks.get(index).markAsDone();
-                    System.out.println(" Nice! This task is marked:");
-                    System.out.println("   " + tasks.get(index));
+                    ui.showMessage(" Nice! This task is marked:");
+                    ui.showMessage("   " + tasks.get(index));
                     saveTasks(tasks);
                 } else if (input.startsWith("unmark")) {
                     int index = Integer.parseInt(input.substring(7)) - 1;
                     checkIndex(index, tasks);
                     tasks.get(index).unmarkAsDone();
-                    System.out.println(" OK, This task is unmarked:");
-                    System.out.println("   " + tasks.get(index));
+                    ui.showMessage(" OK, This task is unmarked:");
+                    ui.showMessage("   " + tasks.get(index));
                     saveTasks(tasks);
                 } else if (input.startsWith("todo")) {
                     if (input.length() <= 5) {
@@ -92,28 +97,25 @@ public class Sasa {
                     int index = Integer.parseInt(input.substring(7)) - 1;
                     checkIndex(index, tasks);
                     Task removed = tasks.remove(index);
-                    System.out.println(" I've removed this task:\n   " + removed);
-                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                    ui.showMessage(" I've removed this task:\n   " + removed);
+                    ui.showMessage(" Now you have " + tasks.size() + " tasks in the list.");
                     saveTasks(tasks);
                 } else {
                     throw new SasaException("Sorry, I do not know what that means :(");
                 }
-                System.out.println(horizontalLine);
+                ui.showLine();
             } catch (SasaException e) {
-                System.out.println(" OOPSIE! " + e.getMessage());
+                ui.showError(e.getMessage());
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
-                System.out.println(" OOPSIE! Please provide a valid task number.");
-            }
-            catch (java.time.format.DateTimeParseException e) {
-                System.out.println(" OOPSIE! I can't understand that date. Use the format: d/M/yyyy HHmm. \n Example format: 31/1/2025 2359");
+                ui.showError("Please provide a valid task number.");
+            } catch (java.time.format.DateTimeParseException e) {
+                ui.showError("I can't understand that date. Use the format: d/M/yyyy HHmm. \n Example format: 31/1/2025 2359");
             }
         }
 
-        System.out.println(horizontalLine);
-        System.out.println(" Bye. Come back when you need me again!");
-        System.out.println(horizontalLine);
-
-        sc.close();
+        ui.showLine();
+        ui.showMessage(" Bye. Come back when you need me again!");
+        ui.showLine();
     }
 
     /**
