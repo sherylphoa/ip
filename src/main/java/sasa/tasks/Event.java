@@ -38,6 +38,14 @@ public class Event extends Task {
         this.to = to;
     }
 
+    public LocalDateTime getFrom() {
+        return this.from;
+    }
+
+    public LocalDateTime getTo() {
+        return this.to;
+    }
+
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + from.format(OUTPUT_FORMAT) + " to: " + to.format(OUTPUT_FORMAT) + ")";

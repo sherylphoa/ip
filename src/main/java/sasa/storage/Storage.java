@@ -23,25 +23,25 @@ public class Storage {
         this.filePath = Paths.get(filePath);
     }
 
-    public void save(ArrayList<Task> tasks) {
+    public void save(ArrayList<Task> tasks) throws SasaException{
         try {
             Files.createDirectories(filePath.getParent());
             FileWriter fw = new FileWriter(filePath.toFile());
             for (Task t : tasks) {
                 String type = (t instanceof Todo) ? "T" : (t instanceof Deadline) ? "D" : "E";
                 int done = t.isTaskDone() ? 1 : 0;
-                String line = type + " | " + done + " | " + t.description;
+                String line = type + " | " + done + " | " + t.getDescription();
                 if (t instanceof Deadline) {
-                    line += " | " + ((Deadline) t).by;
+                    line += " | " + ((Deadline) t).getBy();
                 }
                 if (t instanceof Event) {
-                    line += " | " + ((Event) t).from + " | " + ((Event) t).to;
+                    line += " | " + ((Event) t).getFrom() + " | " + ((Event) t).getTo();
                 }
                 fw.write(line + System.lineSeparator());
             }
             fw.close();
         } catch (IOException e) {
-            System.out.println(" Error saving: " + e.getMessage());
+            throw new SasaException (" Error saving: " + e.getMessage());
         }
     }
 

@@ -33,6 +33,10 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    public LocalDateTime getBy() {
+        return this.by;
+    }
+
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by.format(OUTPUT_FORMAT) + ")";
