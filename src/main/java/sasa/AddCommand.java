@@ -1,4 +1,6 @@
-public class AddCommand extends Command{
+package sasa;
+
+public class AddCommand extends Command {
     private final Task task;
 
     public AddCommand(Task task) {

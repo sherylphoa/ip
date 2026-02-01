@@ -1,13 +1,15 @@
-public class UnmarkCommand extends Command{
+package sasa;
+
+public class MarkCommand extends Command {
     private final int targetIndex;
 
-    public UnmarkCommand(int targetIndex) {
+    public MarkCommand(int targetIndex) {
         this.targetIndex = targetIndex;
     }
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws SasaException {
-        tasks.unmarkTask(targetIndex, ui);
+        tasks.markTask(targetIndex, ui);
         storage.save(tasks.getTasks());
     }
 }

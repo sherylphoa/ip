@@ -1,4 +1,6 @@
-public class DeleteCommand extends Command{
+package sasa;
+
+public class DeleteCommand extends Command {
     private final int index;
 
     public DeleteCommand(int index) {

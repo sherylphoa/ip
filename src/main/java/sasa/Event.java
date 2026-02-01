@@ -1,3 +1,5 @@
+package sasa;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -11,7 +13,7 @@ public class Event extends Task {
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
 
     /**
-     * Constructs an Event task.
+     * Constructs an sasa.Event task.
      *
      * @param description The description of the event.
      * @param from The start time/date.
@@ -24,7 +26,7 @@ public class Event extends Task {
     }
 
     /**
-     * Constructs an Event task from hard disk.
+     * Constructs an sasa.Event task from hard disk.
      *
      * @param description The description of the event.
      * @param from The start time/date in LocalDateTime.

@@ -1,3 +1,5 @@
+package sasa;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -37,7 +39,7 @@ public class Storage {
         }
     }
 
-    public ArrayList<Task> load()throws SasaException{
+    public ArrayList<Task> load()throws SasaException {
         ArrayList<Task> tasks = new ArrayList<>();
         File f = filePath.toFile();
         if (!f.exists()) return tasks;

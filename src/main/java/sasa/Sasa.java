@@ -1,5 +1,7 @@
+package sasa;
+
 /**
- * Main class for the Sasa chatbot
+ * Main class for the sasa.Sasa chatbot
  */
 public class Sasa {
     private final Ui ui;
@@ -20,7 +22,7 @@ public class Sasa {
     /**
      * Main entry point for the application.
      *
-     * @param args Command line arguments.
+     * @param args sasa.Command line arguments.
      */
     public static void main(String[] args) {
         // 2. Start the program as an instance
