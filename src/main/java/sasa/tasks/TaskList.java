@@ -75,4 +75,20 @@ public class TaskList {
             throw new SasaException("sasa.tasks.Task " + (index + 1) + " doesn't exist! You have " + tasks.size() + " tasks.");
         }
     }
+
+    /**
+     * Finds and displays tasks that contain the given keyword in their description.
+     *
+     * @param keyword The string to search for.
+     * @param ui The UI used to display the matching tasks.
+     */
+    public void findTasks(String keyword, Ui ui) {
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                matchingTasks.add(task);
+            }
+        }
+        ui.showMatchingTasks(matchingTasks);
+    }
 }
