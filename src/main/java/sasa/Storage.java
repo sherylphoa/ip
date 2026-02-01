@@ -1,5 +1,7 @@
 package sasa;
 
+import sasa.exception.SasaException;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

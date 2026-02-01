@@ -1,5 +1,7 @@
 package sasa;
 
+import sasa.exception.SasaException;
+
 import java.util.ArrayList;
 
 public class TaskList {

@@ -1,6 +1,7 @@
 package sasa;
 
 import sasa.commands.Command;
+import sasa.exception.SasaException;
 
 /**
  * Main class for the sasa.Sasa chatbot

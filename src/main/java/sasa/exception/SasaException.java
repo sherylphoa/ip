@@ -1,4 +1,4 @@
-package sasa;
+package sasa.exception;
 
 /**
  * Represents exceptions specific to the sasa.Sasa chatbot application.
