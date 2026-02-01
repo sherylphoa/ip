@@ -1,3 +1,11 @@
+package sasa.storage;
+
+import sasa.tasks.Deadline;
+import sasa.tasks.Event;
+import sasa.tasks.Task;
+import sasa.tasks.Todo;
+import sasa.exception.SasaException;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,29 +23,29 @@ public class Storage {
         this.filePath = Paths.get(filePath);
     }
 
-    public void save(ArrayList<Task> tasks) {
+    public void save(ArrayList<Task> tasks) throws SasaException{
         try {
             Files.createDirectories(filePath.getParent());
             FileWriter fw = new FileWriter(filePath.toFile());
             for (Task t : tasks) {
                 String type = (t instanceof Todo) ? "T" : (t instanceof Deadline) ? "D" : "E";
                 int done = t.isTaskDone() ? 1 : 0;
-                String line = type + " | " + done + " | " + t.description;
+                String line = type + " | " + done + " | " + t.getDescription();
                 if (t instanceof Deadline) {
-                    line += " | " + ((Deadline) t).by;
+                    line += " | " + ((Deadline) t).getBy();
                 }
                 if (t instanceof Event) {
-                    line += " | " + ((Event) t).from + " | " + ((Event) t).to;
+                    line += " | " + ((Event) t).getFrom() + " | " + ((Event) t).getTo();
                 }
                 fw.write(line + System.lineSeparator());
             }
             fw.close();
         } catch (IOException e) {
-            System.out.println(" Error saving: " + e.getMessage());
+            throw new SasaException (" Error saving: " + e.getMessage());
         }
     }
 
-    public ArrayList<Task> load()throws SasaException{
+    public ArrayList<Task> load()throws SasaException {
         ArrayList<Task> tasks = new ArrayList<>();
         File f = filePath.toFile();
         if (!f.exists()) return tasks;

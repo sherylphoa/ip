@@ -1,3 +1,5 @@
+package sasa.tasks;
+
 /**
  * Represents a task without any specific date or time attached.
  */

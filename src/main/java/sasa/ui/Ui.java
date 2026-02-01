@@ -1,3 +1,5 @@
+package sasa.ui;
+
 import java.util.Scanner;
 
 public class Ui {
@@ -14,7 +16,7 @@ public class Ui {
 
     public void showWelcome() {
         showLine();
-        System.out.println(" Hello! I'm Sasa\n Your wish is my command");
+        System.out.println(" Hello! I'm sasa.Sasa\n Your wish is my command");
         showLine();
     }
 

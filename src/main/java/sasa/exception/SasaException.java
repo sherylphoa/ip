@@ -1,5 +1,7 @@
+package sasa.exception;
+
 /**
- * Represents exceptions specific to the Sasa chatbot application.
+ * Represents exceptions specific to the sasa.Sasa chatbot application.
  * Used to handle user input errors and file processing issues.
  */
 public class SasaException extends Exception{

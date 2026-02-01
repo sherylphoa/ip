@@ -1,5 +1,14 @@
+package sasa;
+
+import sasa.commands.Command;
+import sasa.exception.SasaException;
+import sasa.parser.Parser;
+import sasa.storage.Storage;
+import sasa.tasks.TaskList;
+import sasa.ui.Ui;
+
 /**
- * Main class for the Sasa chatbot
+ * Main class for the sasa.Sasa chatbot
  */
 public class Sasa {
     private final Ui ui;
@@ -20,7 +29,7 @@ public class Sasa {
     /**
      * Main entry point for the application.
      *
-     * @param args Command line arguments.
+     * @param args sasa.commands.Command line arguments.
      */
     public static void main(String[] args) {
         // 2. Start the program as an instance

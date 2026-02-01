@@ -1,3 +1,8 @@
+package sasa.tasks;
+
+import sasa.ui.Ui;
+import sasa.exception.SasaException;
+
 import java.util.ArrayList;
 
 public class TaskList {
@@ -67,7 +72,7 @@ public class TaskList {
 
     private void checkIndex(int index) throws SasaException {
         if (index < 0 || index >= tasks.size()) {
-            throw new SasaException("Task " + (index + 1) + " doesn't exist! You have " + tasks.size() + " tasks.");
+            throw new SasaException("sasa.tasks.Task " + (index + 1) + " doesn't exist! You have " + tasks.size() + " tasks.");
         }
     }
 }

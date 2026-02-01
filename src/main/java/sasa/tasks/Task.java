@@ -1,5 +1,7 @@
+package sasa.tasks;
+
 /**
- * Represents a generic task in the Sasa chatbot.
+ * Represents a generic task in the sasa.Sasa chatbot.
  * Stores the description and completion status.
  */
 public class Task {
@@ -7,7 +9,7 @@ public class Task {
     protected boolean isDone;
 
     /**
-     * Constructs a new Task with the given description.
+     * Constructs a new sasa.tasks.Task with the given description.
      * The task is initialized as not done.
      *
      * @param description The  description of the task.
@@ -31,6 +33,10 @@ public class Task {
 
     public boolean isTaskDone() {
         return isDone;
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 
     @Override

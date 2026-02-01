@@ -1,5 +1,13 @@
+package sasa.parser;
+
+import sasa.tasks.Deadline;
+import sasa.tasks.Event;
+import sasa.tasks.Todo;
+import sasa.commands.*;
+import sasa.exception.SasaException;
+
 public class Parser {
-    public static Command parse(String fullCommand) throws SasaException{
+    public static Command parse(String fullCommand) throws SasaException {
         String[] components = fullCommand.trim().split(" ", 2);
         String command = components[0].toLowerCase();
         String arg = components.length > 1 ? components[1] : "";
