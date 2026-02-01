@@ -6,7 +6,19 @@ import sasa.tasks.Todo;
 import sasa.commands.*;
 import sasa.exception.SasaException;
 
+/**
+ * Deals with making sense of the user command.
+ * This class contains static methods to parse raw user input into executable Command objects.
+ */
 public class Parser {
+
+    /**
+     * Parses the full command string entered by the user.
+     *
+     * @param fullCommand The raw input string from the user.
+     * @return A Command object corresponding to the user's intent.
+     * @throws SasaException If the command is unrecognized or has invalid arguments.
+     */
     public static Command parse(String fullCommand) throws SasaException {
         String[] components = fullCommand.trim().split(" ", 2);
         String command = components[0].toLowerCase();
@@ -42,6 +54,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the arguments for a todo command.
+     *
+     * @param args The description of the todo.
+     * @return An AddCommand containing the new Todo task.
+     * @throws SasaException If the description is empty.
+     */
     public static Command parseTodo(String args) throws SasaException {
         if (args.isEmpty()) {
             throw new SasaException("The description of a todo cannot be empty.");
@@ -49,6 +68,14 @@ public class Parser {
         return new AddCommand(new Todo(args));
     }
 
+    /**
+     * Parses the arguments for a deadline command.
+     * Expected format: description /by d/M/yyyy HHmm
+     *
+     * @param args The raw argument string including description and date.
+     * @return An AddCommand containing the new Deadline task.
+     * @throws SasaException If the description is empty, formatting is wrong, or date is invalid.
+     */
     public static Command parseDeadline(String args) throws SasaException {
         if (args.isEmpty()) {
             throw new SasaException("The description of a deadline cannot be empty.");
@@ -64,6 +91,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the arguments for an event command.
+     * Expected format: description /from d/M/yyyy HHmm /to d/M/yyyy HHmm
+     *
+     * @param args The raw argument string including description and time ranges.
+     * @return An AddCommand containing the new Event task.
+     * @throws SasaException If formatting is wrong or dates are invalid.
+     */
     public static Command parseEvent(String args) throws SasaException {
         if (args.isEmpty()) {
             throw new SasaException("The description of an event cannot be empty.");
@@ -80,6 +115,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Converts a string argument into a zero-based integer index.
+     *
+     * @param args The string representing the task number (e.g., "1").
+     * @return The integer index (e.g., 0).
+     * @throws SasaException If the input is not a valid integer or is empty.
+     */
     public static int parseIndex(String args) throws SasaException {
         if (args.isEmpty()) {
             throw new SasaException("Please provide a task number.");
