@@ -33,6 +33,11 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    /**
+     * Returns the by time of the deadline.
+     *
+     * @return The LocalDateTime representing the by time.
+     */
     public LocalDateTime getBy() {
         return this.by;
     }
