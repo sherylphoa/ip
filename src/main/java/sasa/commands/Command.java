@@ -1,4 +1,9 @@
-package sasa;
+package sasa.commands;
+
+import sasa.SasaException;
+import sasa.Storage;
+import sasa.TaskList;
+import sasa.Ui;
 
 public abstract class Command {
     public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws SasaException;

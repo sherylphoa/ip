@@ -1,4 +1,9 @@
-package sasa;
+package sasa.commands;
+
+import sasa.SasaException;
+import sasa.Storage;
+import sasa.TaskList;
+import sasa.Ui;
 
 public class MarkCommand extends Command {
     private final int targetIndex;

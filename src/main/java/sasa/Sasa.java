@@ -1,5 +1,7 @@
 package sasa;
 
+import sasa.commands.Command;
+
 /**
  * Main class for the sasa.Sasa chatbot
  */
@@ -22,7 +24,7 @@ public class Sasa {
     /**
      * Main entry point for the application.
      *
-     * @param args sasa.Command line arguments.
+     * @param args sasa.commands.Command line arguments.
      */
     public static void main(String[] args) {
         // 2. Start the program as an instance

@@ -1,4 +1,6 @@
-package sasa;
+package sasa.commands;
+
+import sasa.*;
 
 public class AddCommand extends Command {
     private final Task task;

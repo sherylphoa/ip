@@ -1,4 +1,8 @@
-package sasa;
+package sasa.commands;
+
+import sasa.Storage;
+import sasa.TaskList;
+import sasa.Ui;
 
 public class ExitCommand extends Command {
     @Override
