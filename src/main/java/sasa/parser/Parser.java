@@ -49,6 +49,9 @@ public class Parser {
             case "delete":
                 return new DeleteCommand(parseIndex(arg));
 
+            case "find":
+                return parseFind(arg);
+
             default:
                 throw new SasaException("I don't know that command!");
         }
@@ -131,5 +134,19 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw new SasaException("That's not a valid number!");
         }
+    }
+
+    /**
+     * Parses the arguments for a find command.
+     *
+     * @param arg The search keyword provided by the user.
+     * @return A FindCommand initialized with the keyword.
+     * @throws SasaException If the keyword is empty.
+     */
+    private static Command parseFind(String arg) throws SasaException {
+        if (arg.isEmpty()) {
+            throw new SasaException("The search keyword cannot be empty.");
+        }
+        return new FindCommand(arg);
     }
 }
