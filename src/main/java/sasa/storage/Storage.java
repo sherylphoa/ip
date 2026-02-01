@@ -18,6 +18,9 @@ import java.time.LocalDateTime;
 
 public class Storage {
     private final Path filePath;
+    private static final String TYPE_TODO = "T";
+    private static final String TYPE_DEADLINE = "D";
+    private static final String TYPE_EVENT = "E";
 
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
@@ -28,7 +31,14 @@ public class Storage {
             Files.createDirectories(filePath.getParent());
             FileWriter fw = new FileWriter(filePath.toFile());
             for (Task t : tasks) {
-                String type = (t instanceof Todo) ? "T" : (t instanceof Deadline) ? "D" : "E";
+                String type;
+                if (t instanceof Todo) {
+                    type = TYPE_TODO;
+                } else if (t instanceof Deadline) {
+                    type = TYPE_DEADLINE;
+                } else {
+                    type = TYPE_EVENT;
+                }
                 int done = t.isTaskDone() ? 1 : 0;
                 String line = type + " | " + done + " | " + t.getDescription();
                 if (t instanceof Deadline) {
@@ -52,16 +62,16 @@ public class Storage {
 
         try (Scanner s = new Scanner(f)) {
             while (s.hasNext()) {
-                String[] p = s.nextLine().split(" \\| ");
+                String[] part = s.nextLine().split(" \\| ");
                 Task t;
-                if (p[0].equals("T")) {
-                    t = new Todo(p[2]);
-                } else if (p[0].equals("D")) {
-                    t = new Deadline(p[2], LocalDateTime.parse(p[3]));
+                if (part[0].equals(TYPE_TODO)) {
+                    t = new Todo(part[2]);
+                } else if (part[0].equals(TYPE_DEADLINE)) {
+                    t = new Deadline(part[2], LocalDateTime.parse(part[3]));
                 } else {
-                    t = new Event(p[2], LocalDateTime.parse(p[3]), LocalDateTime.parse(p[4]));
+                    t = new Event(part[2], LocalDateTime.parse(part[3]), LocalDateTime.parse(part[4]));
                 }
-                if (p[1].equals("1")) t.markAsDone();
+                if (part[1].equals("1")) t.markAsDone();
                 tasks.add(t);
             }
         } catch (IOException e) {
