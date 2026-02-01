@@ -1,23 +1,22 @@
-import java.util.Scanner;
 import java.util.ArrayList;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.Files;
-import java.io.FileWriter;
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 
 /**
  * Main class for the Sasa chatbot
  */
 public class Sasa {
-    private static final Path FILE_PATH = Paths.get(".", "data", "sasa.txt");
-    private Ui ui;
+    private final Ui ui;
+    private final Storage storage;
+    private ArrayList<Task> tasks;
 
-    public Sasa() {
+    public Sasa(String filePath) {
         this.ui = new Ui();
+        this.storage = new Storage(filePath);
+        try {
+            this.tasks = storage.load();
+        } catch (SasaException e) {
+            ui.showLoadingError();
+            this.tasks = new ArrayList<>();
+        }
     }
 
     /**
@@ -27,18 +26,14 @@ public class Sasa {
      */
     public static void main(String[] args) {
         // 2. Start the program as an instance
-        new Sasa().run();
+        new Sasa("data/sasa.txt").run();
     }
 
     public void run() {
-        ArrayList<Task> tasks = new ArrayList<>();
-
-        loadTasks(tasks);
         ui.showWelcome();
 
         while (true) {
             String input = ui.readCommand();
-
             if (input.equalsIgnoreCase("bye")) {
                 break;
             }
@@ -55,21 +50,21 @@ public class Sasa {
                     tasks.get(index).markAsDone();
                     ui.showMessage(" Nice! This task is marked:");
                     ui.showMessage("   " + tasks.get(index));
-                    saveTasks(tasks);
+                    storage.save(tasks);
                 } else if (input.startsWith("unmark")) {
                     int index = Integer.parseInt(input.substring(7)) - 1;
                     checkIndex(index, tasks);
                     tasks.get(index).unmarkAsDone();
                     ui.showMessage(" OK, This task is unmarked:");
                     ui.showMessage("   " + tasks.get(index));
-                    saveTasks(tasks);
+                    storage.save(tasks);
                 } else if (input.startsWith("todo")) {
                     if (input.length() <= 5) {
                         throw new SasaException("Please include your task.");
                     }
                     tasks.add(new Todo(input.substring(5)));
                     addMessage(tasks);
-                    saveTasks(tasks);
+                    storage.save(tasks);
                 } else if (input.startsWith("deadline")) {
                     if (input.length() <= 9) {
                         throw new SasaException("Please include your task with the deadline.");
@@ -80,7 +75,7 @@ public class Sasa {
                     String[] parts = input.substring(9).split(" /by ");
                     tasks.add(new Deadline(parts[0], parts[1]));
                     addMessage(tasks);
-                    saveTasks(tasks);
+                    storage.save(tasks);
                 } else if (input.startsWith("event")) {
                     if (input.length() <= 6) {
                         throw new SasaException("Please include your task with the duration.");
@@ -92,14 +87,14 @@ public class Sasa {
                     String[] timeParts = parts[1].split(" /to ");
                     tasks.add(new Event(parts[0], timeParts[0], timeParts[1]));
                     addMessage(tasks);
-                    saveTasks(tasks);
+                    storage.save(tasks);
                 } else if (input.startsWith("delete")) {
                     int index = Integer.parseInt(input.substring(7)) - 1;
                     checkIndex(index, tasks);
                     Task removed = tasks.remove(index);
                     ui.showMessage(" I've removed this task:\n   " + removed);
                     ui.showMessage(" Now you have " + tasks.size() + " tasks in the list.");
-                    saveTasks(tasks);
+                    storage.save(tasks);
                 } else {
                     throw new SasaException("Sorry, I do not know what that means :(");
                 }
@@ -146,67 +141,6 @@ public class Sasa {
     private static void checkIndex(int index, ArrayList<Task> tasks) throws SasaException {
         if (index < 0 || index >= tasks.size()) {
             throw new SasaException("Task " + (index + 1) + " doesn't exist! You have " + tasks.size() + " tasks.");
-        }
-    }
-
-    /**
-     * Saves the current task list to the hard disk.
-     * Creates the data directory if it does not exist and overwrites the existing file.
-     *
-     * @param tasks List of tasks to be saved.
-     */
-    private static void saveTasks(ArrayList<Task> tasks) {
-        try {
-            Files.createDirectories(FILE_PATH.getParent()); // Create ./data/ if missing
-            FileWriter fw = new FileWriter(FILE_PATH.toFile());
-            for (Task t : tasks) {
-                String type = (t instanceof Todo) ? "T" : (t instanceof Deadline) ? "D" : "E";
-                int done = t.isTaskDone() ? 1 : 0;
-                String line = type + " | " + done + " | " + t.description;
-
-                if (t instanceof Deadline) {
-                    line += " | " + ((Deadline) t).by;
-                }
-                if (t instanceof Event) {
-                    line += " | " + ((Event) t).from + " | " + ((Event) t).to;
-                }
-
-                fw.write(line + System.lineSeparator());
-            }
-            fw.close();
-        } catch (IOException e) {
-            System.out.println(" Error saving: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Loads tasks from the hard disk into the provided list.
-     * If the file does not exist, the method returns without modifying the list.
-     *
-     * @param tasks List to populate with loaded data.
-     */
-    private static void loadTasks(ArrayList<Task> tasks) {
-        File f = FILE_PATH.toFile();
-        if (!f.exists()) return;
-
-        try (Scanner s = new Scanner(f)) {
-            while (s.hasNext()) {
-                String[] p = s.nextLine().split(" \\| ");
-                Task t;
-                if (p[0].equals("T")) {
-                    t = new Todo(p[2]);
-                } else if (p[0].equals("D")) {
-                    t = new Deadline(p[2], LocalDateTime.parse(p[3]));
-                } else {
-                    t = new Event(p[2], LocalDateTime.parse(p[3]), LocalDateTime.parse(p[4]));
-                }
-                if (p[1].equals("1")) {
-                    t.markAsDone();
-                }
-                tasks.add(t);
-            }
-        } catch (IOException e) {
-            System.out.println(" Error loading data.");
         }
     }
 }
