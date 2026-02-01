@@ -5,6 +5,9 @@ import sasa.exception.SasaException;
 
 import java.util.ArrayList;
 
+/**
+ * Manages the collection of tasks in the Sasa application.
+ */
 public class TaskList {
     private final ArrayList<Task> tasks;
 
@@ -22,6 +25,12 @@ public class TaskList {
         this.tasks = tasks;
     }
 
+    /**
+     * Adds a task to the list and displays a confirmation message.
+     *
+     * @param task The task to be added.
+     * @param ui   The UI instance to handle message display.
+     */
     public void addTask(Task task, Ui ui) {
         tasks.add(task);
         ui.showMessage(" Got it. I've added this task:");
@@ -33,6 +42,14 @@ public class TaskList {
         }
     }
 
+    /**
+     * Removes a task from the list based on its index.
+     *
+     * @param index The zero-based index of the task to be deleted.
+     * @param ui    The UI instance to handle message display.
+     * @return The task that was removed.
+     * @throws SasaException If the index is out of bounds.
+     */
     public Task deleteTask(int index, Ui ui) throws SasaException {
         checkIndex(index);
         Task removed = tasks.remove(index);
@@ -41,6 +58,13 @@ public class TaskList {
         return removed;
     }
 
+    /**
+     * Marks a task at a specified index as done.
+     *
+     * @param index The zero-based index of the task.
+     * @param ui    The UI instance to handle message display.
+     * @throws SasaException If the index is out of bounds.
+     */
     public void markTask(int index, Ui ui) throws SasaException {
         checkIndex(index);
         tasks.get(index).markAsDone();
@@ -48,6 +72,13 @@ public class TaskList {
         ui.showMessage("   " + tasks.get(index));
     }
 
+    /**
+     * Marks a task at a specified index as not done.
+     *
+     * @param index The zero-based index of the task.
+     * @param ui    The UI instance to handle message display.
+     * @throws SasaException If the index is out of bounds.
+     */
     public void unmarkTask(int index, Ui ui) throws SasaException {
         checkIndex(index);
         tasks.get(index).unmarkAsDone();
@@ -55,6 +86,11 @@ public class TaskList {
         ui.showMessage("   " + tasks.get(index));
     }
 
+    /**
+     * Displays all tasks in the list to the user.
+     *
+     * @param ui The UI instance used to print the task list.
+     */
     public void listTasks(Ui ui) {
         if (tasks.isEmpty()) {
             ui.showMessage(" Your list is currently empty!");
@@ -66,10 +102,21 @@ public class TaskList {
         }
     }
 
+    /**
+     * Returns the raw list of tasks.
+     *
+     * @return An ArrayList containing all tasks.
+     */
     public ArrayList<Task> getTasks() {
         return tasks;
     }
 
+    /**
+     * Validates if the given index exists within the task list.
+     *
+     * @param index The zero-based index to check.
+     * @throws SasaException If the index is negative or exceeds the current list size.
+     */
     private void checkIndex(int index) throws SasaException {
         if (index < 0 || index >= tasks.size()) {
             throw new SasaException("sasa.tasks.Task " + (index + 1) + " doesn't exist! You have " + tasks.size() + " tasks.");
