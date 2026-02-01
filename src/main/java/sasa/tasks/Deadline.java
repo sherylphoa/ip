@@ -1,4 +1,4 @@
-package sasa;
+package sasa.tasks;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +12,7 @@ public class Deadline extends Task {
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
 
     /**
-     * Constructs a sasa.Deadline task.
+     * Constructs a sasa.tasks.Deadline task.
      *
      * @param description The description of the deadline.
      * @param by The date/time the task is due.
@@ -23,7 +23,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Constructs a sasa.Deadline task from hard disk.
+     * Constructs a sasa.tasks.Deadline task from hard disk.
      *
      * @param description The description of the deadline.
      * @param by The date/time the task is due with LocalDateTime data type.

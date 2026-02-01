@@ -1,4 +1,4 @@
-package sasa;
+package sasa.tasks;
 
 /**
  * Represents a generic task in the sasa.Sasa chatbot.
@@ -9,7 +9,7 @@ public class Task {
     protected boolean isDone;
 
     /**
-     * Constructs a new sasa.Task with the given description.
+     * Constructs a new sasa.tasks.Task with the given description.
      * The task is initialized as not done.
      *
      * @param description The  description of the task.

@@ -3,6 +3,8 @@ package sasa.commands;
 import sasa.*;
 import sasa.exception.SasaException;
 import sasa.storage.Storage;
+import sasa.tasks.Task;
+import sasa.tasks.TaskList;
 
 public class AddCommand extends Command {
     private final Task task;

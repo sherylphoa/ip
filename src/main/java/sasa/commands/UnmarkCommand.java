@@ -2,7 +2,7 @@ package sasa.commands;
 
 import sasa.exception.SasaException;
 import sasa.storage.Storage;
-import sasa.TaskList;
+import sasa.tasks.TaskList;
 import sasa.Ui;
 
 public class UnmarkCommand extends Command {

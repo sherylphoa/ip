@@ -1,7 +1,7 @@
 package sasa.commands;
 
 import sasa.storage.Storage;
-import sasa.TaskList;
+import sasa.tasks.TaskList;
 import sasa.Ui;
 
 public class ListCommand extends Command {
