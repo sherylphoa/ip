@@ -53,9 +53,5 @@ public class Sasa {
                 ui.showLine();
             }
         }
-
-        ui.showLine();
-        ui.showMessage(" Bye. Come back when you need me again!");
-        ui.showLine();
     }
 }
