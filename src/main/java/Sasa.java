@@ -32,63 +32,14 @@ public class Sasa {
         boolean isExit = false;
 
         while (!isExit) {
-            String input = ui.readCommand();
-            String[] components = Parser.parseInput(input);
-            String command = components[0].toLowerCase();
-            String arg = components.length > 1 ? components[1] : "";
-            if (command.equals("bye")) {
-                isExit = true;
-                continue;
-            }
             try {
-                ui.showLine();
-                switch(command) {
-                    case "list":
-                        tasks.listTasks(ui);
-                        break;
-
-                    case "mark":
-                        tasks.markTask(Parser.parseIndex(arg), ui);
-                        storage.save(tasks.getTasks());
-                        break;
-
-                    case "unmark":
-                        tasks.unmarkTask(Parser.parseIndex(arg), ui);
-                        storage.save(tasks.getTasks());
-                        break;
-
-                    case "todo":
-                        if (arg.isEmpty()) {
-                            throw new SasaException("Please include your task.");
-                        }
-                        tasks.addTask(new Todo(arg), ui);
-                        storage.save(tasks.getTasks());
-                        break;
-
-                    case "deadline":
-                        String[] dParts = Parser.parseDeadline(arg);
-                        tasks.addTask(new Deadline(dParts[0], dParts[1]), ui);
-                        storage.save(tasks.getTasks());
-                        break;
-
-                    case "event":
-                        String[] eParts = Parser.parseEvent(arg);
-                        tasks.addTask(new Event(eParts[0], eParts[1], eParts[2]), ui);
-                        storage.save(tasks.getTasks());
-                        break;
-
-                    case "delete":
-                        tasks.deleteTask(Parser.parseIndex(arg), ui);
-                        storage.save(tasks.getTasks());
-                        break;
-
-                    default:
-                        throw new SasaException("Sorry, I do not know what that means :(");
-                }
+                String fullCommand = ui.readCommand();
+                ui.showLine(); // show the divider line ("_______")
+                Command c = Parser.parse(fullCommand);
+                c.execute(tasks, ui, storage);
+                isExit = c.isExit();
             } catch (SasaException e) {
                 ui.showError(e.getMessage());
-            } catch (java.time.format.DateTimeParseException e) {
-                ui.showError("I can't understand that date. Use the format: d/M/yyyy HHmm. \n Example format: 31/1/2025 2359");
             } finally {
                 ui.showLine();
             }
