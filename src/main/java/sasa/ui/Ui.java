@@ -1,4 +1,4 @@
-package sasa;
+package sasa.ui;
 
 import java.util.Scanner;
 

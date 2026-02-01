@@ -1,6 +1,6 @@
 package sasa.tasks;
 
-import sasa.Ui;
+import sasa.ui.Ui;
 import sasa.exception.SasaException;
 
 import java.util.ArrayList;

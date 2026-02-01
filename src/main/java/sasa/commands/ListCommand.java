@@ -2,7 +2,7 @@ package sasa.commands;
 
 import sasa.storage.Storage;
 import sasa.tasks.TaskList;
-import sasa.Ui;
+import sasa.ui.Ui;
 
 public class ListCommand extends Command {
     @Override

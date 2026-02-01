@@ -5,6 +5,7 @@ import sasa.exception.SasaException;
 import sasa.parser.Parser;
 import sasa.storage.Storage;
 import sasa.tasks.TaskList;
+import sasa.ui.Ui;
 
 /**
  * Main class for the sasa.Sasa chatbot

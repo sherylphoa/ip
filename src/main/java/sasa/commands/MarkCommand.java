@@ -3,7 +3,7 @@ package sasa.commands;
 import sasa.exception.SasaException;
 import sasa.storage.Storage;
 import sasa.tasks.TaskList;
-import sasa.Ui;
+import sasa.ui.Ui;
 
 public class MarkCommand extends Command {
     private final int targetIndex;
