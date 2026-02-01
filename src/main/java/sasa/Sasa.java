@@ -9,12 +9,20 @@ import sasa.ui.Ui;
 
 /**
  * Main class for the sasa.Sasa chatbot
+ * Sasa is a task management assistant that allows users to track todos, deadlines and events.
+ * It handles the initialization of core components and manages the main execution loop.
  */
 public class Sasa {
     private final Ui ui;
     private final Storage storage;
     private TaskList tasks;
 
+    /**
+     * Constructs a Sasa instance and initializes the UI, Storage and TaskList.
+     * Loads existing tasks from the specified file path.
+     *
+     * @param filePath The path to the file where task data is stored.
+     */
     public Sasa(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -32,10 +40,13 @@ public class Sasa {
      * @param args sasa.commands.Command line arguments.
      */
     public static void main(String[] args) {
-        // 2. Start the program as an instance
         new Sasa("data/sasa.txt").run();
     }
 
+    /**
+     * Starts the main execution loop of the chatbot.
+     * The loop continues to read and execute user commands until an exit command is received.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
