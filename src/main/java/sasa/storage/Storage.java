@@ -1,5 +1,9 @@
-package sasa;
+package sasa.storage;
 
+import sasa.Deadline;
+import sasa.Event;
+import sasa.Task;
+import sasa.Todo;
 import sasa.exception.SasaException;
 
 import java.io.File;

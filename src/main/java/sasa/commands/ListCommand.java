@@ -1,6 +1,6 @@
 package sasa.commands;
 
-import sasa.Storage;
+import sasa.storage.Storage;
 import sasa.TaskList;
 import sasa.Ui;
 

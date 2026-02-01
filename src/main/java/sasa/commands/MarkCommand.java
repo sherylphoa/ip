@@ -1,7 +1,7 @@
 package sasa.commands;
 
 import sasa.exception.SasaException;
-import sasa.Storage;
+import sasa.storage.Storage;
 import sasa.TaskList;
 import sasa.Ui;
 
