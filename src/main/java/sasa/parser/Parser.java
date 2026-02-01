@@ -1,5 +1,8 @@
-package sasa;
+package sasa.parser;
 
+import sasa.Deadline;
+import sasa.Event;
+import sasa.Todo;
 import sasa.commands.*;
 import sasa.exception.SasaException;
 
