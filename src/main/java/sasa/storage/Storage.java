@@ -16,13 +16,28 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDateTime;
 
+/**
+ * Handles loading tasks from the file and saving tasks in the file.
+ */
 public class Storage {
     private final Path filePath;
 
+    /**
+     * Constructs a Storage object with the specified file path.
+     *
+     * @param filePath The string path of the storage file (e.g., "./data/sasa.txt").
+     */
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
     }
 
+    /**
+     * Saves the current list of tasks to the storage file.
+     * If the directory or file does not exist, they will be created.
+     *
+     * @param tasks The list of tasks to be written to the file.
+     * @throws SasaException If an error occurs while writing to the file or creating directories.
+     */
     public void save(ArrayList<Task> tasks) throws SasaException{
         try {
             Files.createDirectories(filePath.getParent());
@@ -45,6 +60,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the storage file and returns them as an ArrayList.
+     * If the file does not exist, it returns an empty list.
+     *
+     * @return An ArrayList of tasks loaded from the file.
+     * @throws SasaException If the file exists but cannot be read or contains malformed data.
+     */
     public ArrayList<Task> load()throws SasaException {
         ArrayList<Task> tasks = new ArrayList<>();
         File f = filePath.toFile();
