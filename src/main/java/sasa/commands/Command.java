@@ -18,7 +18,7 @@ public abstract class Command {
      * @param storage The storage component to read or write task data.
      * @throws SasaException If an error occurs during execution.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws SasaException;
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws SasaException;
 
     /**
      * Returns whether this command should signal the application to terminate.

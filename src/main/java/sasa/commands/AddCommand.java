@@ -22,8 +22,9 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws SasaException {
-        tasks.addTask(task, ui);
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws SasaException {
+        String reply = tasks.addTask(task, ui);
         storage.save(tasks.getTasks());
+        return reply;
     }
 }

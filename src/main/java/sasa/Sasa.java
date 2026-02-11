@@ -65,4 +65,13 @@ public class Sasa {
             }
         }
     }
+
+    public String getResponse(String input) {
+        try {
+            Command c = Parser.parse(input);
+            return c.execute(taskList, ui, storage); // Assuming execute returns a String
+        } catch (TalkingPalException e) {
+            return e.getMessage();
+        }
+    }
 }
