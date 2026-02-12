@@ -20,7 +20,7 @@ public class MarkCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws SasaException {
-        tasks.markTask(targetIndex, ui);
+        this.reply = tasks.markTask(targetIndex, ui);
         storage.save(tasks.getTasks());
     }
 }

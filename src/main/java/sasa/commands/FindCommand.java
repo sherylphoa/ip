@@ -7,7 +7,7 @@ import sasa.ui.Ui;
 /**
  * Represents a command to search for tasks containing a specific keyword.
  */
-public class FindCommand extends Command{
+public class FindCommand extends Command {
     private final String keyword;
 
     /**
@@ -21,6 +21,6 @@ public class FindCommand extends Command{
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        tasks.findTasks(keyword, ui);
+        this.reply = tasks.findTasks(keyword, ui);
     }
 }

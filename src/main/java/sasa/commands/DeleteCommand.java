@@ -22,7 +22,7 @@ public class DeleteCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws SasaException {
-        tasks.deleteTask(index, ui);
+        this.reply = tasks.deleteTask(index, ui);
         storage.save(tasks.getTasks());
     }
 }

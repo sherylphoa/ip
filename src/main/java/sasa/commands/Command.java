@@ -9,6 +9,7 @@ import sasa.ui.Ui;
  * Represents an executable command within the Sasa application.
  */
 public abstract class Command {
+    protected String reply = "";
 
     /**
      * Executes the specific logic of the command.
@@ -27,5 +28,9 @@ public abstract class Command {
      */
     public boolean isExit() {
         return false;
+    }
+
+    public String getReply() {
+        return reply;
     }
 }

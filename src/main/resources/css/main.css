@@ -1,0 +1,51 @@
+.root {
+    -fx-background-color: rgb(247, 225, 240);
+}
+
+.text-field {
+    -fx-background-color: rgb(240, 225, 247);
+    -fx-border-width: 1px;
+    -fx-border-color: black rgb(240, 225, 247) rgb(240, 225, 247)  rgb(240, 225, 247);
+    -fx-font: 14px "Nunito";
+}
+
+.button { /* make the button round */
+    -fx-background-color: rgb(224, 173, 247);
+    -fx-background-radius: 15;
+    -fx-font: italic bold 16px "Nunito";
+}
+
+.button:hover {
+    -fx-background-color:rgb(224, 173, 247);
+    -fx-background-radius: 15;
+    -fx-font-size: 18px;
+}
+
+.button:pressed {
+    -fx-background-color:rgb(247, 139, 247);
+    -fx-background-radius: 15;
+    -fx-font-size: 20px;
+}
+
+.scroll-pane,
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar {
+    -fx-font-size: 10px;  /* Change width of scroll bar. */
+    -fx-background-color: white;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: black;
+    -fx-background-radius: 1em;
+}
+
+/* Hides the increment and decrement buttons. */
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
+}
+

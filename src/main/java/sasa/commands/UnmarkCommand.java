@@ -20,7 +20,7 @@ public class UnmarkCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws SasaException {
-        tasks.unmarkTask(targetIndex, ui);
+        this.reply = tasks.unmarkTask(targetIndex, ui);
         storage.save(tasks.getTasks());
     }
 }
