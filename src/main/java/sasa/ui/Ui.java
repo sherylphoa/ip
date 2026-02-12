@@ -7,7 +7,7 @@ import java.util.Scanner;
  * Displays messages, errors and reading user input from the console.
  */
 public class Ui {
-    private final String HORIZONTAL_LINE = "____________________________________________________________";
+    private static final String HORIZONTAL_LINE = "____________________________________________________________";
     private final Scanner scanner;
 
     /**

@@ -30,6 +30,10 @@ public abstract class Command {
         return false;
     }
 
+    /**
+     * Returns the response message generated after the command is executed.
+     * @return The chatbot's reply message.
+     */
     public String getReply() {
         return reply;
     }

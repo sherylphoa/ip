@@ -47,11 +47,12 @@ application {
 }
 
 shadowJar {
-    archiveFileName = 'Sasa.jar'
+    archiveFileName = 'sasa.jar'
 }
 
-run{
+run {
     standardInput = System.in
+    enableAssertions = true
 }
 
 checkstyle {

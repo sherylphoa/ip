@@ -1,29 +1,30 @@
 package sasa.storage;
 
-import sasa.tasks.Deadline;
-import sasa.tasks.Event;
-import sasa.tasks.Task;
-import sasa.tasks.Todo;
-import sasa.exception.SasaException;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.time.LocalDateTime;
+
+import sasa.exception.SasaException;
+import sasa.tasks.Deadline;
+import sasa.tasks.Event;
+import sasa.tasks.Task;
+import sasa.tasks.Todo;
+
 
 /**
  * Handles loading tasks from the file and saving tasks in the file.
  */
 public class Storage {
-    private final Path filePath;
     private static final String TYPE_TODO = "T";
     private static final String TYPE_DEADLINE = "D";
     private static final String TYPE_EVENT = "E";
+    private final Path filePath;
 
     /**
      * Constructs a Storage object with the specified file path.
@@ -41,7 +42,7 @@ public class Storage {
      * @param tasks The list of tasks to be written to the file.
      * @throws SasaException If an error occurs while writing to the file or creating directories.
      */
-    public void save(ArrayList<Task> tasks) throws SasaException{
+    public void saveTasksToFile(ArrayList<Task> tasks) throws SasaException {
         try {
             Files.createDirectories(filePath.getParent());
             FileWriter fw = new FileWriter(filePath.toFile());
@@ -66,7 +67,7 @@ public class Storage {
             }
             fw.close();
         } catch (IOException e) {
-            throw new SasaException (" Error saving: " + e.getMessage());
+            throw new SasaException(" Error saving: " + e.getMessage());
         }
     }
 
@@ -77,23 +78,27 @@ public class Storage {
      * @return An ArrayList of tasks loaded from the file.
      * @throws SasaException If the file exists but cannot be read or contains malformed data.
      */
-    public ArrayList<Task> load()throws SasaException {
+    public ArrayList<Task> load() throws SasaException {
         ArrayList<Task> tasks = new ArrayList<>();
         File f = filePath.toFile();
-        if (!f.exists()) return tasks;
+        if (!f.exists()) {
+            return tasks;
+        }
 
         try (Scanner s = new Scanner(f)) {
             while (s.hasNext()) {
-                String[] part = s.nextLine().split(" \\| ");
+                String[] parts = s.nextLine().split(" \\| ");
                 Task t;
-                if (part[0].equals(TYPE_TODO)) {
-                    t = new Todo(part[2]);
-                } else if (part[0].equals(TYPE_DEADLINE)) {
-                    t = new Deadline(part[2], LocalDateTime.parse(part[3]));
+                if (parts[0].equals(TYPE_TODO)) {
+                    t = new Todo(parts[2]);
+                } else if (parts[0].equals(TYPE_DEADLINE)) {
+                    t = new Deadline(parts[2], LocalDateTime.parse(parts[3]));
                 } else {
-                    t = new Event(part[2], LocalDateTime.parse(part[3]), LocalDateTime.parse(part[4]));
+                    t = new Event(parts[2], LocalDateTime.parse(parts[3]), LocalDateTime.parse(parts[4]));
                 }
-                if (part[1].equals("1")) t.markAsDone();
+                if (parts[1].equals("1")) {
+                    t.markAsDone();
+                }
                 tasks.add(t);
             }
         } catch (IOException e) {

@@ -8,7 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-
+/**
+ * The main entry point for the JavaFX application.
+ * Handles the initialization of the graphical user interface, sets up the primary stage,
+ * and injects the chatbot logic into the FXML controller.
+ */
 public class Main extends Application {
     private static final String FILE_PATH = "data/sasa.txt";
     private Sasa sasa = new Sasa(FILE_PATH);

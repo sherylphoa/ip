@@ -21,6 +21,6 @@ public class MarkCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws SasaException {
         this.reply = tasks.markTask(targetIndex, ui);
-        storage.save(tasks.getTasks());
+        storage.saveTasksToFile(tasks.getTasks());
     }
 }

@@ -7,30 +7,30 @@ import java.time.format.DateTimeFormatter;
  * Represents a task that must be completed by a specified deadline.
  */
 public class Deadline extends Task {
-    protected LocalDateTime by;
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
+    protected LocalDateTime deadlineDateTime;
 
     /**
      * Constructs a sasa.tasks.Deadline task.
      *
      * @param description The description of the deadline.
-     * @param by The date/time the task is due.
+     * @param deadlineDateTime The date/time the task is due.
      */
-    public Deadline(String description, String by) {
+    public Deadline(String description, String deadlineDateTime) {
         super(description);
-        this.by = LocalDateTime.parse(by, INPUT_FORMAT);
+        this.deadlineDateTime = LocalDateTime.parse(deadlineDateTime, INPUT_FORMAT);
     }
 
     /**
      * Constructs a sasa.tasks.Deadline task from hard disk.
      *
      * @param description The description of the deadline.
-     * @param by The date/time the task is due with LocalDateTime data type.
+     * @param deadlineDateTime The date/time the task is due with LocalDateTime data type.
      */
-    public Deadline(String description, LocalDateTime by) {
+    public Deadline(String description, LocalDateTime deadlineDateTime) {
         super(description);
-        this.by = by;
+        this.deadlineDateTime = deadlineDateTime;
     }
 
     /**
@@ -39,11 +39,11 @@ public class Deadline extends Task {
      * @return The LocalDateTime representing the by time.
      */
     public LocalDateTime getBy() {
-        return this.by;
+        return this.deadlineDateTime;
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by.format(OUTPUT_FORMAT) + ")";
+        return "[D]" + super.toString() + " (by: " + deadlineDateTime.format(OUTPUT_FORMAT) + ")";
     }
 }

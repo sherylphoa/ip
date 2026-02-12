@@ -1,10 +1,17 @@
 package sasa.parser;
 
+import sasa.commands.AddCommand;
+import sasa.commands.Command;
+import sasa.commands.DeleteCommand;
+import sasa.commands.ExitCommand;
+import sasa.commands.FindCommand;
+import sasa.commands.ListCommand;
+import sasa.commands.MarkCommand;
+import sasa.commands.UnmarkCommand;
+import sasa.exception.SasaException;
 import sasa.tasks.Deadline;
 import sasa.tasks.Event;
 import sasa.tasks.Todo;
-import sasa.commands.*;
-import sasa.exception.SasaException;
 
 /**
  * Deals with making sense of the user command.
@@ -25,35 +32,35 @@ public class Parser {
         String arg = components.length > 1 ? components[1] : "";
 
         switch(command) {
-            case "bye":
-                return new ExitCommand();
+        case "bye":
+            return new ExitCommand();
 
-            case "list":
-                return new ListCommand();
+        case "list":
+            return new ListCommand();
 
-            case "mark":
-                return new MarkCommand(parseIndex(arg));
+        case "mark":
+            return new MarkCommand(parseIndex(arg));
 
-            case "unmark":
-                return new UnmarkCommand(parseIndex(arg));
+        case "unmark":
+            return new UnmarkCommand(parseIndex(arg));
 
-            case "todo":
-                return parseTodo(arg);
+        case "todo":
+            return parseTodo(arg);
 
-            case "deadline":
-                return parseDeadline(arg);
+        case "deadline":
+            return parseDeadline(arg);
 
-            case "event":
-                return parseEvent(arg);
+        case "event":
+            return parseEvent(arg);
 
-            case "delete":
-                return new DeleteCommand(parseIndex(arg));
+        case "delete":
+            return new DeleteCommand(parseIndex(arg));
 
-            case "find":
-                return parseFind(arg);
+        case "find":
+            return parseFind(arg);
 
-            default:
-                throw new SasaException("I don't know that command!");
+        default:
+            throw new SasaException("I don't know that command!");
         }
     }
 
@@ -90,7 +97,8 @@ public class Parser {
         try {
             return new AddCommand(new Deadline(parts[0], parts[1]));
         } catch (java.time.format.DateTimeParseException e) {
-            throw new SasaException("I can't understand that date. Use the format: d/M/yyyy HHmm.\n Example: 31/1/2025 2359");
+            throw new SasaException("I can't understand that date. Use the format: d/M/yyyy HHmm.\n "
+                    + "Example: 31/1/2025 2359");
         }
     }
 
@@ -114,23 +122,24 @@ public class Parser {
         try {
             return new AddCommand(new Event(parts[0], timeParts[0], timeParts[1]));
         } catch (java.time.format.DateTimeParseException e) {
-            throw new SasaException("I can't understand that date. Use the format: d/M/yyyy HHmm.\n Example: 31/1/2025 2359");
+            throw new SasaException("I can't understand that date. Use the format: d/M/yyyy HHmm.\n"
+                    + "Example: 31/1/2025 2359");
         }
     }
 
     /**
      * Converts a string argument into a zero-based integer index.
      *
-     * @param args The string representing the task number (e.g., "1").
+     * @param arg The string representing the task number (e.g., "1").
      * @return The integer index (e.g., 0).
      * @throws SasaException If the input is not a valid integer or is empty.
      */
-    public static int parseIndex(String args) throws SasaException {
-        if (args.isEmpty()) {
+    public static int parseIndex(String arg) throws SasaException {
+        if (arg.isEmpty()) {
             throw new SasaException("Please provide a task number.");
         }
         try {
-            return Integer.parseInt(args) - 1;
+            return Integer.parseInt(arg) - 1;
         } catch (NumberFormatException e) {
             throw new SasaException("That's not a valid number!");
         }

@@ -22,7 +22,6 @@ public class MainWindow extends AnchorPane {
     private Button sendButton;
 
     private Sasa sasa;
-
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
     private Image sasaImage = new Image(this.getClass().getResourceAsStream("/images/sasa.png"));
 
@@ -31,7 +30,11 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Duke instance */
+    /**
+     * Injects the Sasa logic instance into the controller.
+     *
+     * @param d The Sasa instance to be used for processing user commands.
+     */
     public void setSasa(Sasa d) {
         sasa = d;
     }

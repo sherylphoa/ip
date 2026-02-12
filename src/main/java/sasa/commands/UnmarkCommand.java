@@ -21,6 +21,6 @@ public class UnmarkCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws SasaException {
         this.reply = tasks.unmarkTask(targetIndex, ui);
-        storage.save(tasks.getTasks());
+        storage.saveTasksToFile(tasks.getTasks());
     }
 }

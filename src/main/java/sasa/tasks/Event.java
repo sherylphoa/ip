@@ -7,35 +7,35 @@ import java.time.format.DateTimeFormatter;
  * Represents a task that starts and ends at specified times.
  */
 public class Event extends Task {
-    protected LocalDateTime from;
-    protected LocalDateTime to;
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
+    protected LocalDateTime startDateTime;
+    protected LocalDateTime endDateTime;
 
     /**
      * Constructs an sasa.tasks.Event task.
      *
      * @param description The description of the event.
-     * @param from The start time/date.
-     * @param to The end time/date.
+     * @param startDateTime The start time/date.
+     * @param endDateTime The end time/date.
      */
-    public Event(String description, String from, String to) {
+    public Event(String description, String startDateTime, String endDateTime) {
         super(description);
-        this.from = LocalDateTime.parse(from, INPUT_FORMAT);
-        this.to = LocalDateTime.parse(to, INPUT_FORMAT);
+        this.startDateTime = LocalDateTime.parse(startDateTime, INPUT_FORMAT);
+        this.endDateTime = LocalDateTime.parse(endDateTime, INPUT_FORMAT);
     }
 
     /**
-     * Constructs an sasa.tasks.Event task from hard disk.
+     * Constructs a sasa.tasks.Event task from hard disk.
      *
      * @param description The description of the event.
-     * @param from The start time/date in LocalDateTime.
-     * @param to The end time/date in LocalDateTime.
+     * @param startDateTime The start time/date in LocalDateTime.
+     * @param endDateTime The end time/date in LocalDateTime.
      */
-    public Event(String description, LocalDateTime from, LocalDateTime to) {
+    public Event(String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         super(description);
-        this.from = from;
-        this.to = to;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
     }
 
     /**
@@ -44,7 +44,7 @@ public class Event extends Task {
      * @return The LocalDateTime representing the start.
      */
     public LocalDateTime getFrom() {
-        return this.from;
+        return this.startDateTime;
     }
 
     /**
@@ -53,11 +53,12 @@ public class Event extends Task {
      * @return The LocalDateTime representing the end.
      */
     public LocalDateTime getTo() {
-        return this.to;
+        return this.endDateTime;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from.format(OUTPUT_FORMAT) + " to: " + to.format(OUTPUT_FORMAT) + ")";
+        return "[E]" + super.toString() + " (from: " + startDateTime.format(OUTPUT_FORMAT)
+                + " to: " + endDateTime.format(OUTPUT_FORMAT) + ")";
     }
 }
