@@ -44,9 +44,10 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = sasa.getResponse(input);
+        String commandType = sasa.getCommandType();
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, sasaImage)
+                DialogBox.getSasaDialog(response, sasaImage, commandType)
         );
         userInput.clear();
     }

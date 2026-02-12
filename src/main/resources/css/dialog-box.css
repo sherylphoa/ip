@@ -16,7 +16,7 @@
 }
 
 .add-label {
-    -fx-background-color: yellow;
+    -fx-background-color: lightyellow;
 }
 
 .marked-label {
@@ -25,6 +25,10 @@
 
 .delete-label {
     -fx-background-color: lightpink;
+}
+
+.find-label {
+    -fx-background-color: lightblue;
 }
 
 #displayPicture {

@@ -16,6 +16,7 @@ public class Sasa {
     private final Ui ui;
     private final Storage storage;
     private TaskList tasks;
+    private String commandType;
 
     /**
      * Constructs a Sasa instance and initializes the UI, Storage and TaskList.
@@ -70,9 +71,14 @@ public class Sasa {
         try {
             Command c = Parser.parse(input);
             c.execute(tasks, ui, storage);
+            commandType = c.getClass().getSimpleName();
             return c.getReply();
         } catch (SasaException e) {
             return e.getMessage();
         }
+    }
+
+    public String getCommandType() {
+        return commandType;
     }
 }

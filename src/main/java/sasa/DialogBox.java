@@ -51,10 +51,28 @@ public class DialogBox extends HBox {
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
+    private void changeDialogStyle(String commandType) {
+        switch(commandType) {
+        case "AddCommand":
+            dialog.getStyleClass().add("add-label");
+            break;
+        case "MarkCommand":
+            dialog.getStyleClass().add("marked-label");
+            break;
+        case "DeleteCommand":
+            dialog.getStyleClass().add("delete-label");
+            break;
+        case "FindCommand":
+            dialog.getStyleClass().add("find-label");
+            break;
+        default:
+        }
+    }
 
-    public static DialogBox getDukeDialog(String text, Image img) {
+    public static DialogBox getSasaDialog(String text, Image img, String commandType) {
         var db = new DialogBox(text, img);
         db.flip();
+        db.changeDialogStyle(commandType);
         return db;
     }
 }
