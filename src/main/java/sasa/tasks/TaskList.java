@@ -120,7 +120,7 @@ public class TaskList {
      */
     private void checkIndex(int index) throws SasaException {
         if (index < 0 || index >= tasks.size()) {
-            throw new SasaException("sasa.tasks.Task " + (index + 1)
+            throw new SasaException("Task " + (index + 1)
                     + " doesn't exist! You have " + tasks.size() + " tasks.");
         }
     }
