@@ -9,6 +9,7 @@ import sasa.ui.Ui;
  * Represents an executable command within the Sasa application.
  */
 public abstract class Command {
+    protected String reply = "";
 
     /**
      * Executes the specific logic of the command.
@@ -18,7 +19,7 @@ public abstract class Command {
      * @param storage The storage component to read or write task data.
      * @throws SasaException If an error occurs during execution.
      */
-    public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws SasaException;
+    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws SasaException;
 
     /**
      * Returns whether this command should signal the application to terminate.
@@ -27,5 +28,9 @@ public abstract class Command {
      */
     public boolean isExit() {
         return false;
+    }
+
+    public String getReply() {
+        return reply;
     }
 }

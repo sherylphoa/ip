@@ -69,8 +69,9 @@ public class Sasa {
     public String getResponse(String input) {
         try {
             Command c = Parser.parse(input);
-            return c.execute(taskList, ui, storage); // Assuming execute returns a String
-        } catch (TalkingPalException e) {
+            c.execute(tasks, ui, storage);
+            return c.getReply();
+        } catch (SasaException e) {
             return e.getMessage();
         }
     }

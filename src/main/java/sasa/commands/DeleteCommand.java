@@ -21,9 +21,8 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws SasaException {
-        String reply = tasks.deleteTask(index, ui);
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws SasaException {
+        this.reply = tasks.deleteTask(index, ui);
         storage.save(tasks.getTasks());
-        return reply;
     }
 }
