@@ -43,6 +43,7 @@ public class Storage {
      * @throws SasaException If an error occurs while writing to the file or creating directories.
      */
     public void saveTasksToFile(ArrayList<Task> tasks) throws SasaException {
+        assert tasks != null : "Cannot save a null task list";
         try {
             Files.createDirectories(filePath.getParent());
             FileWriter fw = new FileWriter(filePath.toFile());
@@ -78,7 +79,8 @@ public class Storage {
      * @return An ArrayList of tasks loaded from the file.
      * @throws SasaException If the file exists but cannot be read or contains malformed data.
      */
-    public ArrayList<Task> load() throws SasaException {
+    public ArrayList<Task> loadTasks() throws SasaException {
+        assert filePath != null : "Storage file path must not be null";
         ArrayList<Task> tasks = new ArrayList<>();
         File f = filePath.toFile();
         if (!f.exists()) {
@@ -88,6 +90,8 @@ public class Storage {
         try (Scanner s = new Scanner(f)) {
             while (s.hasNext()) {
                 String[] parts = s.nextLine().split(" \\| ");
+                assert parts.length >= 3 : "Malformed line in storage file: insufficient data fields";
+                assert parts[0].matches("[TDE]") : "Unknown task type in storage file: " + parts[0];
                 Task t;
                 if (parts[0].equals(TYPE_TODO)) {
                     t = new Todo(parts[2]);
@@ -104,6 +108,7 @@ public class Storage {
         } catch (IOException e) {
             throw new SasaException(" Error loading data.");
         }
+        assert tasks != null : "Should return a valid list even if empty";
         return tasks;
     }
 }
