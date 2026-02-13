@@ -27,6 +27,9 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     public void initialize() {
+        assert scrollPane != null : "fx:id=\"scrollPane\" was not injected: check the FXML file";
+        assert dialogContainer != null : "fx:id=\"dialogContainer\" was not injected";
+        assert userInput != null : "fx:id=\"userInput\" was not injected";
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
@@ -48,6 +51,7 @@ public class MainWindow extends AnchorPane {
         String input = userInput.getText();
         String response = sasa.getResponse(input);
         String commandType = sasa.getCommandType();
+        assert commandType != null : "CommandType should not be null when generating a response";
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getSasaDialog(response, sasaImage, commandType)

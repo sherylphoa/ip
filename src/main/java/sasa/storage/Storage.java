@@ -59,10 +59,10 @@ public class Storage {
                 int done = t.isTaskDone() ? 1 : 0;
                 String line = type + " | " + done + " | " + t.getDescription();
                 if (t instanceof Deadline) {
-                    line += " | " + ((Deadline) t).getBy();
+                    line += " | " + ((Deadline) t).getDeadlineDateTime();
                 }
                 if (t instanceof Event) {
-                    line += " | " + ((Event) t).getFrom() + " | " + ((Event) t).getTo();
+                    line += " | " + ((Event) t).getStartDateTime() + " | " + ((Event) t).getEndDateTime();
                 }
                 fw.write(line + System.lineSeparator());
             }
