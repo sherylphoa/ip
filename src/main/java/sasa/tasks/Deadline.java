@@ -34,12 +34,17 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns the by time of the deadline.
+     * Returns the deadlineDateTime time of the deadline.
      *
      * @return The LocalDateTime representing the by time.
      */
-    public LocalDateTime getBy() {
+    public LocalDateTime getDeadlineDateTime() {
         return this.deadlineDateTime;
+    }
+
+    @Override
+    public String toFileFormat() {
+        return String.format("D | %d | %s | %s", isDone ? 1 : 0, description, deadlineDateTime);
     }
 
     @Override

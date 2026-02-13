@@ -4,7 +4,7 @@ package sasa.tasks;
  * Represents a generic task in the sasa.Sasa chatbot.
  * Stores the description and completion status.
  */
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -59,6 +59,14 @@ public class Task {
     public String getDescription() {
         return this.description;
     }
+
+    /**
+     * Returns a string formatted for saving the task to a data file.
+     * The format follows the pattern: TYPE | IS_DONE | DESCRIPTION | ...
+     *
+     * @return A string representing the task in storage format.
+     */
+    public abstract String toFileFormat();
 
     @Override
     public String toString() {

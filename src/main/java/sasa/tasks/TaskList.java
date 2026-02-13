@@ -35,6 +35,10 @@ public class TaskList {
      */
     public String addTask(Task task, Ui ui) {
         tasks.add(task);
+        return generateAddMessage(task);
+    }
+
+    private String generateAddMessage(Task task) {
         String addMessage = " Got it. I've added this task: \n" + task;
         if (tasks.size() == 1) {
             return addMessage + "\n" + " Now you have 1 task in the list.";
@@ -54,7 +58,11 @@ public class TaskList {
     public String deleteTask(int index, Ui ui) throws SasaException {
         checkIndex(index);
         Task removed = tasks.remove(index);
-        return " I've removed this task:\n   " + removed + "\n"
+        return generateDeleteMessage(removed);
+    }
+
+    private String generateDeleteMessage(Task task) {
+        return " I've removed this task:\n   " + task + "\n"
                 + " Now you have " + tasks.size() + " tasks in the list.";
     }
 

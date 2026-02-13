@@ -47,23 +47,7 @@ public class Storage {
             Files.createDirectories(filePath.getParent());
             FileWriter fw = new FileWriter(filePath.toFile());
             for (Task t : tasks) {
-                String type;
-                if (t instanceof Todo) {
-                    type = TYPE_TODO;
-                } else if (t instanceof Deadline) {
-                    type = TYPE_DEADLINE;
-                } else {
-                    type = TYPE_EVENT;
-                }
-                int done = t.isTaskDone() ? 1 : 0;
-                String line = type + " | " + done + " | " + t.getDescription();
-                if (t instanceof Deadline) {
-                    line += " | " + ((Deadline) t).getBy();
-                }
-                if (t instanceof Event) {
-                    line += " | " + ((Event) t).getFrom() + " | " + ((Event) t).getTo();
-                }
-                fw.write(line + System.lineSeparator());
+                fw.write(t.toFileFormat() + System.lineSeparator());
             }
             fw.close();
         } catch (IOException e) {
@@ -84,26 +68,39 @@ public class Storage {
         if (!f.exists()) {
             return tasks;
         }
-
         try (Scanner s = new Scanner(f)) {
             while (s.hasNext()) {
-                String[] parts = s.nextLine().split(" \\| ");
-                Task t;
-                if (parts[0].equals(TYPE_TODO)) {
-                    t = new Todo(parts[2]);
-                } else if (parts[0].equals(TYPE_DEADLINE)) {
-                    t = new Deadline(parts[2], LocalDateTime.parse(parts[3]));
-                } else {
-                    t = new Event(parts[2], LocalDateTime.parse(parts[3]), LocalDateTime.parse(parts[4]));
-                }
-                if (parts[1].equals("1")) {
-                    t.markAsDone();
-                }
-                tasks.add(t);
+                tasks.add(parseTaskFromLine(s.nextLine()));
             }
         } catch (IOException e) {
             throw new SasaException(" Error loading data.");
         }
         return tasks;
+    }
+
+    private Task parseTaskFromLine(String line) throws SasaException {
+        String[] parts = line.split(" \\| ");
+        assert parts.length >= 3;
+        Task t = createTaskByType(parts);
+        if (parts[1].equals("1")) {
+            t.markAsDone();
+        }
+        return t;
+    }
+
+    private Task createTaskByType(String[] parts) throws SasaException {
+        String type = parts[0];
+        String description = parts[2];
+
+        switch (type) {
+        case TYPE_TODO:
+            return new Todo(description);
+        case TYPE_DEADLINE:
+            return new Deadline(description, LocalDateTime.parse(parts[3]));
+        case TYPE_EVENT:
+            return new Event(description, LocalDateTime.parse(parts[4]), LocalDateTime.parse(parts[5]));
+        default:
+            throw new SasaException("Unknown task type in storage file: " + type);
+        }
     }
 }
