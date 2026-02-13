@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import sasa.exception.SasaException;
 import sasa.ui.Ui;
 
-
 /**
  * Manages the collection of tasks in the Sasa application.
  */
@@ -31,15 +30,15 @@ public class TaskList {
      *
      * @param task The task to be added.
      * @param ui   The UI instance to handle message display.
-     * @return The chatbot's reply
      */
-    public String addTask(Task task, Ui ui) {
+    public void addTask(Task task, Ui ui) {
         tasks.add(task);
-        String addMessage = " Got it. I've added this task: \n" + task;
+        ui.showMessage(" Got it. I've added this task:");
+        ui.showMessage("   " + task);
         if (tasks.size() == 1) {
-            return addMessage + "\n" + " Now you have 1 task in the list.";
+            System.out.println(" Now you have 1 task in the list.");
         } else {
-            return addMessage + "\n" + " Now you have " + tasks.size() + " tasks in the list.";
+            System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
         }
     }
 
@@ -48,14 +47,15 @@ public class TaskList {
      *
      * @param index The zero-based index of the task to be deleted.
      * @param ui    The UI instance to handle message display.
-     * @return The chatbot's reply.
+     * @return The task that was removed.
      * @throws SasaException If the index is out of bounds.
      */
-    public String deleteTask(int index, Ui ui) throws SasaException {
+    public Task deleteTask(int index, Ui ui) throws SasaException {
         checkIndex(index);
         Task removed = tasks.remove(index);
-        return " I've removed this task:\n   " + removed + "\n"
-                + " Now you have " + tasks.size() + " tasks in the list.";
+        ui.showMessage(" I've removed this task:\n   " + removed);
+        ui.showMessage(" Now you have " + tasks.size() + " tasks in the list.");
+        return removed;
     }
 
     /**
@@ -63,13 +63,13 @@ public class TaskList {
      *
      * @param index The zero-based index of the task.
      * @param ui    The UI instance to handle message display.
-     * @return The Chatbot's reply
      * @throws SasaException If the index is out of bounds.
      */
-    public String markTask(int index, Ui ui) throws SasaException {
+    public void markTask(int index, Ui ui) throws SasaException {
         checkIndex(index);
         tasks.get(index).markAsDone();
-        return " Nice! This task is marked:" + "\n" + "   " + tasks.get(index);
+        ui.showMessage(" Nice! This task is marked:");
+        ui.showMessage("   " + tasks.get(index));
     }
 
     /**
@@ -77,13 +77,13 @@ public class TaskList {
      *
      * @param index The zero-based index of the task.
      * @param ui    The UI instance to handle message display.
-     * @return The chatbot's reply
      * @throws SasaException If the index is out of bounds.
      */
-    public String unmarkTask(int index, Ui ui) throws SasaException {
+    public void unmarkTask(int index, Ui ui) throws SasaException {
         checkIndex(index);
         tasks.get(index).unmarkAsDone();
-        return " OK, This task is unmarked:" + "\n" + "   " + tasks.get(index);
+        ui.showMessage(" OK, This task is unmarked:");
+        ui.showMessage("   " + tasks.get(index));
     }
 
     /**
@@ -91,15 +91,14 @@ public class TaskList {
      *
      * @param ui The UI instance used to print the task list.
      */
-    public String listTasks(Ui ui) {
+    public void listTasks(Ui ui) {
         if (tasks.isEmpty()) {
-            return " Your list is currently empty!";
-        } else {
-            String message = " Here are your tasks:";
-            for (int i = 0; i < tasks.size(); i++) {
-                message = message + "\n" + " " + (i + 1) + "." + tasks.get(i);
-            }
-            return message;
+            ui.showMessage(" Your list is currently empty!");
+            return;
+        }
+        ui.showMessage(" Here are your tasks:");
+        for (int i = 0; i < tasks.size(); i++) {
+            ui.showMessage(" " + (i + 1) + "." + tasks.get(i));
         }
     }
 
@@ -120,8 +119,8 @@ public class TaskList {
      */
     private void checkIndex(int index) throws SasaException {
         if (index < 0 || index >= tasks.size()) {
-            throw new SasaException("Task " + (index + 1)
-                    + " doesn't exist! You have " + tasks.size() + " tasks.");
+            throw new SasaException("sasa.tasks.Task " + (index + 1) + " doesn't exist! You have "
+                    + tasks.size() + " tasks.");
         }
     }
 
@@ -131,21 +130,13 @@ public class TaskList {
      * @param keyword The string to search for.
      * @param ui The UI used to display the matching tasks.
      */
-    public String findTasks(String keyword, Ui ui) {
+    public void findTasks(String keyword, Ui ui) {
         ArrayList<Task> matchingTasks = new ArrayList<>();
         for (Task task : tasks) {
             if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
                 matchingTasks.add(task);
             }
         }
-        if (matchingTasks.isEmpty()) {
-            return " There are no matching tasks in your list.";
-        } else {
-            String message = " Here are the matching tasks in your list:";
-            for (int i = 0; i < matchingTasks.size(); i++) {
-                message = message + "\n" + " " + (i + 1) + "." + matchingTasks.get(i);
-            }
-            return message;
-        }
+        ui.showMatchingTasks(matchingTasks);
     }
 }
