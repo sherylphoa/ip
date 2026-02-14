@@ -32,7 +32,7 @@ public class Sasa {
 
     private TaskList initializeTaskList() {
         try {
-            return new TaskList(storage.load());
+            return new TaskList(storage.loadTasks());
         } catch (SasaException e) {
             ui.showLoadingError();
             return new TaskList();

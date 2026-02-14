@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import sasa.exception.SasaException;
 import sasa.ui.Ui;
 
-
 /**
  * Manages the collection of tasks in the Sasa application.
  */
@@ -34,7 +33,10 @@ public class TaskList {
      * @return The chatbot's reply
      */
     public String addTask(Task task, Ui ui) {
+        assert tasks != null : "Internal task list should not be null";
+        int initialSize = tasks.size();
         tasks.add(task);
+        assert tasks.size() == initialSize + 1 : "List size should increase by 1 after adding";
         return generateAddMessage(task);
     }
 
@@ -56,8 +58,11 @@ public class TaskList {
      * @throws SasaException If the index is out of bounds.
      */
     public String deleteTask(int index, Ui ui) throws SasaException {
+        assert tasks != null : "Task list internal array should be initialized";
+        int initialSize = tasks.size();
         checkIndex(index);
         Task removed = tasks.remove(index);
+        assert tasks.size() < initialSize : "List size should decrease after deletion";
         return generateDeleteMessage(removed);
     }
 
@@ -71,12 +76,13 @@ public class TaskList {
      *
      * @param index The zero-based index of the task.
      * @param ui    The UI instance to handle message display.
-     * @return The Chatbot's reply
+     * @return The Chatbot's reply.
      * @throws SasaException If the index is out of bounds.
      */
     public String markTask(int index, Ui ui) throws SasaException {
         checkIndex(index);
         tasks.get(index).markAsDone();
+        assert tasks.get(index).isTaskDone() : "Task should be marked as done";
         return " Nice! This task is marked:" + "\n" + "   " + tasks.get(index);
     }
 
@@ -91,6 +97,7 @@ public class TaskList {
     public String unmarkTask(int index, Ui ui) throws SasaException {
         checkIndex(index);
         tasks.get(index).unmarkAsDone();
+        assert !tasks.get(index).isTaskDone() : "Task should be marked as not done";
         return " OK, This task is unmarked:" + "\n" + "   " + tasks.get(index);
     }
 
@@ -98,6 +105,7 @@ public class TaskList {
      * Displays all tasks in the list to the user.
      *
      * @param ui The UI instance used to print the task list.
+     * @return The chatbot's reply.
      */
     public String listTasks(Ui ui) {
         if (tasks.isEmpty()) {
@@ -127,8 +135,9 @@ public class TaskList {
      * @throws SasaException If the index is negative or exceeds the current list size.
      */
     private void checkIndex(int index) throws SasaException {
+        assert index >= 0 : "Index should be non-negative; check Parser logic.";
         if (index < 0 || index >= tasks.size()) {
-            throw new SasaException("Task " + (index + 1)
+            throw new SasaException("sasa.tasks.Task " + (index + 1)
                     + " doesn't exist! You have " + tasks.size() + " tasks.");
         }
     }
@@ -138,6 +147,7 @@ public class TaskList {
      *
      * @param keyword The string to search for.
      * @param ui The UI used to display the matching tasks.
+     * @return The chatbot's reply
      */
     public String findTasks(String keyword, Ui ui) {
         ArrayList<Task> matchingTasks = new ArrayList<>();

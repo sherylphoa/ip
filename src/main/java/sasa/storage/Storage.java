@@ -43,6 +43,7 @@ public class Storage {
      * @throws SasaException If an error occurs while writing to the file or creating directories.
      */
     public void saveTasksToFile(ArrayList<Task> tasks) throws SasaException {
+        assert tasks != null : "Cannot save a null task list";
         try {
             Files.createDirectories(filePath.getParent());
             FileWriter fw = new FileWriter(filePath.toFile());
@@ -62,12 +63,14 @@ public class Storage {
      * @return An ArrayList of tasks loaded from the file.
      * @throws SasaException If the file exists but cannot be read or contains malformed data.
      */
-    public ArrayList<Task> load() throws SasaException {
+    public ArrayList<Task> loadTasks() throws SasaException {
+        assert filePath != null : "Storage file path must not be null";
         ArrayList<Task> tasks = new ArrayList<>();
         File f = filePath.toFile();
         if (!f.exists()) {
             return tasks;
         }
+
         try (Scanner s = new Scanner(f)) {
             while (s.hasNext()) {
                 tasks.add(parseTaskFromLine(s.nextLine()));
@@ -75,6 +78,7 @@ public class Storage {
         } catch (IOException e) {
             throw new SasaException(" Error loading data.");
         }
+        assert tasks != null : "Should return a valid list even if empty";
         return tasks;
     }
 
