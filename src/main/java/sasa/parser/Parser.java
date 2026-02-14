@@ -27,7 +27,10 @@ public class Parser {
      * @throws SasaException If the command is unrecognized or has invalid arguments.
      */
     public static Command parse(String fullCommand) throws SasaException {
+        assert fullCommand != null : "Command string should not be null";
         String[] components = fullCommand.trim().split(" ", 2);
+
+        assert components.length > 0 : "fullCommand should have description";
         String command = components[0].toLowerCase();
         String arg = components.length > 1 ? components[1] : "";
 
@@ -67,33 +70,34 @@ public class Parser {
     /**
      * Parses the arguments for a todo command.
      *
-     * @param args The description of the todo.
+     * @param arg The description of the todo.
      * @return An AddCommand containing the new Todo task.
      * @throws SasaException If the description is empty.
      */
-    public static Command parseTodo(String args) throws SasaException {
-        if (args.isEmpty()) {
+    public static Command parseTodo(String arg) throws SasaException {
+        if (arg.isEmpty()) {
             throw new SasaException("The description of a todo cannot be empty.");
         }
-        return new AddCommand(new Todo(args));
+        return new AddCommand(new Todo(arg));
     }
 
     /**
      * Parses the arguments for a deadline command.
      * Expected format: description /by d/M/yyyy HHmm
      *
-     * @param args The raw argument string including description and date.
+     * @param arg The raw argument string including description and date.
      * @return An AddCommand containing the new Deadline task.
      * @throws SasaException If the description is empty, formatting is wrong, or date is invalid.
      */
-    public static Command parseDeadline(String args) throws SasaException {
-        if (args.isEmpty()) {
+    public static Command parseDeadline(String arg) throws SasaException {
+        if (arg.isEmpty()) {
             throw new SasaException("The description of a deadline cannot be empty.");
         }
-        if (!args.contains(" /by ")) {
+        if (!arg.contains(" /by ")) {
             throw new SasaException("Deadlines must include ' /by ' followed by a date.");
         }
-        String[] parts = args.split(" /by ");
+        String[] parts = arg.split(" /by ");
+        assert parts.length == 2 : "Should have description and date";
         try {
             return new AddCommand(new Deadline(parts[0], parts[1]));
         } catch (java.time.format.DateTimeParseException e) {
@@ -106,19 +110,21 @@ public class Parser {
      * Parses the arguments for an event command.
      * Expected format: description /from d/M/yyyy HHmm /to d/M/yyyy HHmm
      *
-     * @param args The raw argument string including description and time ranges.
+     * @param arg The raw argument string including description and time ranges.
      * @return An AddCommand containing the new Event task.
      * @throws SasaException If formatting is wrong or dates are invalid.
      */
-    public static Command parseEvent(String args) throws SasaException {
-        if (args.isEmpty()) {
+    public static Command parseEvent(String arg) throws SasaException {
+        if (arg.isEmpty()) {
             throw new SasaException("The description of an event cannot be empty.");
         }
-        if (!args.contains(" /from ") || !args.contains(" /to ")) {
+        if (!arg.contains(" /from ") || !arg.contains(" /to ")) {
             throw new SasaException("Events must include ' /from ' and ' /to '.");
         }
-        String[] parts = args.split(" /from ");
+        String[] parts = arg.split(" /from ");
+        assert parts.length == 2 : "Should have description and time string";
         String[] timeParts = parts[1].split(" /to ");
+        assert timeParts.length == 2 : "Should have from-date and to-date";
         try {
             return new AddCommand(new Event(parts[0], timeParts[0], timeParts[1]));
         } catch (java.time.format.DateTimeParseException e) {

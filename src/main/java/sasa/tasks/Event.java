@@ -39,20 +39,20 @@ public class Event extends Task {
     }
 
     /**
-     * Returns the start time of the event.
+     * Returns the startDateTime of the event.
      *
      * @return The LocalDateTime representing the start.
      */
-    public LocalDateTime getFrom() {
+    public LocalDateTime getStartDateTime() {
         return this.startDateTime;
     }
 
     /**
-     * Returns the end time of the event.
+     * Returns the endDateTime of the event.
      *
      * @return The LocalDateTime representing the end.
      */
-    public LocalDateTime getTo() {
+    public LocalDateTime getEndDateTime() {
         return this.endDateTime;
     }
 
