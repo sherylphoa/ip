@@ -18,6 +18,11 @@ import sasa.tasks.Todo;
  * This class contains static methods to parse raw user input into executable Command objects.
  */
 public class Parser {
+    private static final String DEADLINE_BY = " /by ";
+    private static final String EVENT_FROM = " /from ";
+    private static final String EVENT_TO = " /to ";
+    private static final String DATE_ERROR = "I can't understand that date. Use the format: d/M/yyyy HHmm.\n "
+            + "Example: 31/1/2025 2359";
 
     /**
      * Parses the full command string entered by the user.
@@ -33,35 +38,25 @@ public class Parser {
         assert components.length > 0 : "fullCommand should have description";
         String command = components[0].toLowerCase();
         String arg = components.length > 1 ? components[1] : "";
-
         switch(command) {
         case "bye":
             return new ExitCommand();
-
         case "list":
             return new ListCommand();
-
         case "mark":
             return new MarkCommand(parseIndex(arg));
-
         case "unmark":
             return new UnmarkCommand(parseIndex(arg));
-
         case "todo":
             return parseTodo(arg);
-
         case "deadline":
             return parseDeadline(arg);
-
         case "event":
             return parseEvent(arg);
-
         case "delete":
             return new DeleteCommand(parseIndex(arg));
-
         case "find":
             return parseFind(arg);
-
         default:
             throw new SasaException("I don't know that command!");
         }
@@ -93,16 +88,14 @@ public class Parser {
         if (arg.isEmpty()) {
             throw new SasaException("The description of a deadline cannot be empty.");
         }
-        if (!arg.contains(" /by ")) {
-            throw new SasaException("Deadlines must include ' /by ' followed by a date.");
+        String[] parts = arg.split(DEADLINE_BY);
+        if (parts.length < 2) {
+            throw new SasaException("Deadlines must include '" + DEADLINE_BY + "' followed by a date.");
         }
-        String[] parts = arg.split(" /by ");
-        assert parts.length == 2 : "Should have description and date";
         try {
             return new AddCommand(new Deadline(parts[0], parts[1]));
         } catch (java.time.format.DateTimeParseException e) {
-            throw new SasaException("I can't understand that date. Use the format: d/M/yyyy HHmm.\n "
-                    + "Example: 31/1/2025 2359");
+            throw new SasaException(DATE_ERROR);
         }
     }
 
@@ -118,18 +111,15 @@ public class Parser {
         if (arg.isEmpty()) {
             throw new SasaException("The description of an event cannot be empty.");
         }
-        if (!arg.contains(" /from ") || !arg.contains(" /to ")) {
-            throw new SasaException("Events must include ' /from ' and ' /to '.");
+        String[] parts = arg.split(EVENT_FROM);
+        if (parts.length < 2 || !arg.contains(EVENT_TO)) {
+            throw new SasaException("Events must include '" + EVENT_FROM + "' and '" + EVENT_TO + "'.");
         }
-        String[] parts = arg.split(" /from ");
-        assert parts.length == 2 : "Should have description and time string";
-        String[] timeParts = parts[1].split(" /to ");
-        assert timeParts.length == 2 : "Should have from-date and to-date";
+        String[] timeParts = parts[1].split(EVENT_TO);
         try {
             return new AddCommand(new Event(parts[0], timeParts[0], timeParts[1]));
         } catch (java.time.format.DateTimeParseException e) {
-            throw new SasaException("I can't understand that date. Use the format: d/M/yyyy HHmm.\n"
-                    + "Example: 31/1/2025 2359");
+            throw new SasaException(DATE_ERROR);
         }
     }
 

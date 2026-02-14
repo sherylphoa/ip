@@ -37,6 +37,10 @@ public class TaskList {
         int initialSize = tasks.size();
         tasks.add(task);
         assert tasks.size() == initialSize + 1 : "List size should increase by 1 after adding";
+        return generateAddMessage(task);
+    }
+
+    private String generateAddMessage(Task task) {
         String addMessage = " Got it. I've added this task: \n" + task;
         if (tasks.size() == 1) {
             return addMessage + "\n" + " Now you have 1 task in the list.";
@@ -59,7 +63,11 @@ public class TaskList {
         checkIndex(index);
         Task removed = tasks.remove(index);
         assert tasks.size() < initialSize : "List size should decrease after deletion";
-        return " I've removed this task:\n   " + removed + "\n"
+        return generateDeleteMessage(removed);
+    }
+
+    private String generateDeleteMessage(Task task) {
+        return " I've removed this task:\n   " + task + "\n"
                 + " Now you have " + tasks.size() + " tasks in the list.";
     }
 
@@ -83,7 +91,7 @@ public class TaskList {
      *
      * @param index The zero-based index of the task.
      * @param ui    The UI instance to handle message display.
-     * @return The chatbot's reply.
+     * @return The chatbot's reply
      * @throws SasaException If the index is out of bounds.
      */
     public String unmarkTask(int index, Ui ui) throws SasaException {
@@ -147,10 +155,6 @@ public class TaskList {
             if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
                 matchingTasks.add(task);
             }
-        }
-        for (Task t : matchingTasks) {
-            assert t.getDescription().toLowerCase().contains(keyword.toLowerCase())
-                    : "Matching task does not contain the search keyword";
         }
         if (matchingTasks.isEmpty()) {
             return " There are no matching tasks in your list.";
