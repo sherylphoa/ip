@@ -57,7 +57,7 @@ public class Sasa {
                 String fullCommand = ui.readCommand();
                 ui.showLine(); // show the divider line ("_______")
                 Command c = Parser.parse(fullCommand);
-                c.execute(tasks, ui, storage);
+                c.execute(tasks, storage);
                 isExit = c.isExit();
             } catch (SasaException e) {
                 ui.showError(e.getMessage());
@@ -76,7 +76,7 @@ public class Sasa {
     public String getResponse(String input) {
         try {
             Command c = Parser.parse(input);
-            c.execute(tasks, ui, storage);
+            c.execute(tasks, storage);
             commandType = c.getClass().getSimpleName();
             return c.getReply();
         } catch (SasaException e) {
