@@ -2,7 +2,6 @@ package sasa.commands;
 
 import sasa.storage.Storage;
 import sasa.tasks.TaskList;
-import sasa.ui.Ui;
 
 /**
  * Represents a command to search for tasks containing a specific keyword.
@@ -20,7 +19,7 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        this.reply = tasks.findTasks(keyword, ui);
+    public void execute(TaskList tasks, Storage storage) {
+        this.reply = tasks.findTasks(keyword);
     }
 }

@@ -3,7 +3,6 @@ package sasa.commands;
 import sasa.exception.SasaException;
 import sasa.storage.Storage;
 import sasa.tasks.TaskList;
-import sasa.ui.Ui;
 
 /**
  * Represents a command to delete a task from the task list.
@@ -21,8 +20,8 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws SasaException {
-        this.reply = tasks.deleteTask(index, ui);
+    public void execute(TaskList tasks, Storage storage) throws SasaException {
+        this.reply = tasks.deleteTask(index);
         storage.saveTasksToFile(tasks.getTasks());
     }
 }
