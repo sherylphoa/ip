@@ -57,6 +57,11 @@ public class Event extends Task {
     }
 
     @Override
+    public String toFileFormat() {
+        return String.format("E | %d | %s | %s | %s", isDone ? 1 : 0, description, startDateTime, endDateTime);
+    }
+
+    @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + startDateTime.format(OUTPUT_FORMAT)
                 + " to: " + endDateTime.format(OUTPUT_FORMAT) + ")";

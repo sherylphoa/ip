@@ -27,11 +27,15 @@ public class Sasa {
     public Sasa(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
+        this.tasks = initializeTaskList();
+    }
+
+    private TaskList initializeTaskList() {
         try {
-            tasks = new TaskList(storage.loadTasks());
+            return new TaskList(storage.loadTasks());
         } catch (SasaException e) {
             ui.showLoadingError();
-            tasks = new TaskList();
+            return new TaskList();
         }
     }
 
@@ -55,7 +59,7 @@ public class Sasa {
         while (!isExit) {
             try {
                 String fullCommand = ui.readCommand();
-                ui.showLine(); // show the divider line ("_______")
+                ui.showLine();
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, storage);
                 isExit = c.isExit();
@@ -80,7 +84,6 @@ public class Sasa {
             commandType = c.getClass().getSimpleName();
             return c.getReply();
         } catch (SasaException e) {
-            commandType = "Error";
             return e.getMessage();
         }
     }

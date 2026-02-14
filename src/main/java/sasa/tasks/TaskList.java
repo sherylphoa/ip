@@ -36,6 +36,10 @@ public class TaskList {
         int initialSize = tasks.size();
         tasks.add(task);
         assert tasks.size() == initialSize + 1 : "List size should increase by 1 after adding";
+        return generateAddMessage(task);
+    }
+
+    private String generateAddMessage(Task task) {
         String addMessage = " Got it. I've added this task: \n" + task;
         if (tasks.size() == 1) {
             return addMessage + "\n" + " Now you have 1 task in the list.";
@@ -57,7 +61,11 @@ public class TaskList {
         checkIndex(index);
         Task removed = tasks.remove(index);
         assert tasks.size() < initialSize : "List size should decrease after deletion";
-        return " I've removed this task:\n   " + removed + "\n"
+        return generateDeleteMessage(removed);
+    }
+
+    private String generateDeleteMessage(Task task) {
+        return " I've removed this task:\n   " + task + "\n"
                 + " Now you have " + tasks.size() + " tasks in the list.";
     }
 
@@ -121,6 +129,7 @@ public class TaskList {
      * @throws SasaException If the index is negative or exceeds the current list size.
      */
     private void checkIndex(int index) throws SasaException {
+        assert index >= 0 : "Index should be non-negative; check Parser logic.";
         if (index < 0 || index >= tasks.size()) {
             throw new SasaException("sasa.tasks.Task " + (index + 1)
                     + " doesn't exist! You have " + tasks.size() + " tasks.");
