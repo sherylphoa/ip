@@ -155,36 +155,74 @@ public class TaskList {
                 : " Here are the matching tasks:" + matchingTasks;
     }
 
+    /**
+     * Sorts the tasks in the list chronologically by their start date and time.
+     *
+     * Deadlines are sorted by their due date, and Events are sorted by their start date.
+     * If two Events have the same start time, the one that ends earlier is placed first.
+     * Tasks without dates (e.g., Todos) are moved to the end of the list.
+     *
+     * @return The sorted list.
+     */
     public String sortTasks() {
         if (tasks.isEmpty()) {
             return " Your list is empty, nothing to sort!";
         }
 
         tasks.sort((t1, t2) -> {
-            LocalDateTime d1 = getTaskDate(t1);
-            LocalDateTime d2 = getTaskDate(t2);
+            LocalDateTime start1 = getTaskDate(t1);
+            LocalDateTime start2 = getTaskDate(t2);
 
-            if (d1 == null && d2 == null) {
+            if (start1 == null && start2 == null) {
                 return 0;
             }
-            if (d1 == null) {
+            if (start1 == null) {
                 return 1;
             }
-            if (d2 == null) {
+            if (start2 == null) {
                 return -1;
             }
+            int startCompare = start1.compareTo(start2);
 
-            return d1.compareTo(d2);
+            if (startCompare == 0) {
+                LocalDateTime end1 = getTaskEndDate(t1);
+                LocalDateTime end2 = getTaskEndDate(t2);
+
+                if (end1 != null && end2 != null) {
+                    return end1.compareTo(end2); // Earlier end time comes first
+                }
+            }
+
+            return startCompare;
         });
 
-        return " Here is your list sorted chronologically:\n" + listTasks();
+        return listTasks();
     }
 
+    /**
+     * Retrieves the primary date and time associated with a task for sorting.
+     *
+     * @param t The task to extract the date from.
+     * @return The LocalDateTime of the Deadline or the start of an Event or null for Todos;
+     */
     private LocalDateTime getTaskDate(Task t) {
         if (t instanceof Deadline) {
             return ((Deadline) t).getDeadlineDateTime();
         } else if (t instanceof Event) {
             return ((Event) t).getStartDateTime();
+        }
+        return null;
+    }
+
+    /**
+     * Retrieves the end date and time for events.
+     *
+     * @param t The task to extract the end date from.
+     * @return The LocalDateTime representing the end of an Event or null for Deadlines and Todos;
+     */
+    private LocalDateTime getTaskEndDate(Task t) {
+        if (t instanceof Event) {
+            return ((Event) t).getEndDateTime(); // Assuming this getter returns LocalDateTime
         }
         return null;
     }

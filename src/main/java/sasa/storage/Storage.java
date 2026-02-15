@@ -102,7 +102,7 @@ public class Storage {
         case TYPE_DEADLINE:
             return new Deadline(description, LocalDateTime.parse(parts[3]));
         case TYPE_EVENT:
-            return new Event(description, LocalDateTime.parse(parts[4]), LocalDateTime.parse(parts[5]));
+            return new Event(description, LocalDateTime.parse(parts[3]), LocalDateTime.parse(parts[4]));
         default:
             throw new SasaException("Unknown task type in storage file: " + type);
         }
