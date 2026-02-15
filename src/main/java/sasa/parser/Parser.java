@@ -7,6 +7,7 @@ import sasa.commands.ExitCommand;
 import sasa.commands.FindCommand;
 import sasa.commands.ListCommand;
 import sasa.commands.MarkCommand;
+import sasa.commands.SortCommand;
 import sasa.commands.UnmarkCommand;
 import sasa.exception.SasaException;
 import sasa.tasks.Deadline;
@@ -57,6 +58,8 @@ public class Parser {
             return new DeleteCommand(parseIndex(arg));
         case "find":
             return parseFind(arg);
+        case "sort":
+            return new SortCommand();
         default:
             throw new SasaException("I don't know that command!");
         }

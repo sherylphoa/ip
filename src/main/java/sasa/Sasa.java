@@ -84,6 +84,7 @@ public class Sasa {
             commandType = c.getClass().getSimpleName();
             return c.getReply();
         } catch (SasaException e) {
+            commandType = "Error";
             return e.getMessage();
         }
     }

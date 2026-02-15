@@ -1,5 +1,6 @@
 package sasa.tasks;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
@@ -152,5 +153,39 @@ public class TaskList {
         return matchingTasks.isEmpty()
                 ? " There are no matching tasks."
                 : " Here are the matching tasks:" + matchingTasks;
+    }
+
+    public String sortTasks() {
+        if (tasks.isEmpty()) {
+            return " Your list is empty, nothing to sort!";
+        }
+
+        tasks.sort((t1, t2) -> {
+            LocalDateTime d1 = getTaskDate(t1);
+            LocalDateTime d2 = getTaskDate(t2);
+
+            if (d1 == null && d2 == null) {
+                return 0;
+            }
+            if (d1 == null) {
+                return 1;
+            }
+            if (d2 == null) {
+                return -1;
+            }
+
+            return d1.compareTo(d2);
+        });
+
+        return " Here is your list sorted chronologically:\n" + listTasks();
+    }
+
+    private LocalDateTime getTaskDate(Task t) {
+        if (t instanceof Deadline) {
+            return ((Deadline) t).getDeadlineDateTime();
+        } else if (t instanceof Event) {
+            return ((Event) t).getStartDateTime();
+        }
+        return null;
     }
 }
