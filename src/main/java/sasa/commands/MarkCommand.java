@@ -3,7 +3,6 @@ package sasa.commands;
 import sasa.exception.SasaException;
 import sasa.storage.Storage;
 import sasa.tasks.TaskList;
-import sasa.ui.Ui;
 
 /**
  * Represents a command to mark a specific task as completed.
@@ -19,8 +18,8 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws SasaException {
-        this.reply = tasks.markTask(targetIndex, ui);
+    public void execute(TaskList tasks, Storage storage) throws SasaException {
+        this.reply = tasks.markTask(targetIndex);
         storage.saveTasksToFile(tasks.getTasks());
     }
 }
