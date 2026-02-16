@@ -27,10 +27,8 @@ public class Ui {
     /**
      * Displays the welcome message and the logo/name of the chatbot.
      */
-    public void showWelcome() {
-        showLine();
-        System.out.println(" Hello! I'm sasa.Sasa\n Your wish is my command");
-        showLine();
+    public String showWelcome() {
+        return " Hello! I'm Sasa\n Your wish is my command";
     }
 
     /**

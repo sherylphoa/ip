@@ -36,10 +36,14 @@ public class MainWindow extends AnchorPane {
     /**
      * Injects the Sasa logic instance into the controller.
      *
-     * @param d The Sasa instance to be used for processing user commands.
+     * @param s The Sasa instance to be used for processing user commands.
      */
-    public void setSasa(Sasa d) {
-        sasa = d;
+    public void setSasa(Sasa s) {
+        sasa = s;
+        String welcomeMessage = sasa.getWelcomeMessage();
+        dialogContainer.getChildren().add(
+                DialogBox.getSasaDialog(welcomeMessage, sasaImage, "System")
+        );
     }
 
     /**
@@ -51,12 +55,21 @@ public class MainWindow extends AnchorPane {
         String input = userInput.getText();
         String response = sasa.getResponse(input);
         String commandType = sasa.getCommandType();
+
         assert commandType != null : "CommandType should not be null when generating a response";
+
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getSasaDialog(response, sasaImage, commandType)
         );
         userInput.clear();
+
+        if (sasa.shouldExit()) {
+            javafx.animation.PauseTransition delay =
+                    new javafx.animation.PauseTransition(javafx.util.Duration.seconds(0.75));
+            delay.setOnFinished(event -> javafx.application.Platform.exit());
+            delay.play();
+        }
     }
 }
 

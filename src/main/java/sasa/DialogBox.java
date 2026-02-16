@@ -88,6 +88,9 @@ public class DialogBox extends HBox {
         case "Error":
             dialog.getStyleClass().add("error-label");
             break;
+        case "System":
+            dialog.getStyleClass().add("system-label");
+            break;
         default:
         }
     }

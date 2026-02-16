@@ -17,6 +17,7 @@ public class Sasa {
     private final Storage storage;
     private TaskList tasks;
     private String commandType;
+    private boolean isExit = false;
 
     /**
      * Constructs a Sasa instance and initializes the UI, Storage and TaskList.
@@ -82,9 +83,11 @@ public class Sasa {
             Command c = Parser.parse(input);
             c.execute(tasks, storage);
             commandType = c.getClass().getSimpleName();
+            isExit = c.isExit();
             return c.getReply();
         } catch (SasaException e) {
             commandType = "Error";
+            isExit = false;
             return e.getMessage();
         }
     }
@@ -96,5 +99,21 @@ public class Sasa {
      */
     public String getCommandType() {
         return commandType;
+    }
+
+    /**
+     * Checks if the last processed command was an exit command.
+     * @return true if the app should close.
+     */
+    public boolean shouldExit() {
+        return isExit;
+    }
+
+    /**
+     * Gets the welcome message from the ui.
+     * @return The chatbot's welcome message.
+     */
+    public String getWelcomeMessage() {
+        return ui.showWelcome();
     }
 }
