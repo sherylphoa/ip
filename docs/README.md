@@ -5,15 +5,15 @@
 
 ---
 ## 🚀 Quick Start 
----
+
 1. Ensure that you have **Java 17** installed on your computer
 2. Download the **latest** `sasa.jar` (v0.3) from our [releases page](https://github.com/sherylphoa/ip/releases)
 3. Open a command terminal, navigate to the folder containing the file, and run: `java -jar sasa.jar`
-4. Type your commands into the text box and press **Enter**
+4. Type your commands into the text box and start making your wishes!
 
 ---
 ## ⌨️ Command Format
----
+
 To ensure Sasa understands your wishes, please follow these formatting guidelines:
 
 ### Case Insensitivity
@@ -44,16 +44,16 @@ When viewing your list, you will see these symbols:
 
 ---
 ## ✨ Features 
----
+
 ### Adding a Todo: `todo`
 * Adds a task that does not have any specific deadline or time constraint
 * Command: `todo DESCRIPTION`
 * Example: `todo read book`
 * Expected output: Sasa confirms the addition and shows the updated total task count.
     
-    `Got it. I've added this task:
-    [T][] read book
-    Now you have 1 task in the list.`
+    > Got it. I've added this task:
+    > [T][] read book
+    > Now you have 1 task in the list.
 
 ### Adding a Deadline: `deadline`
 * Adds a task that needs to be done by a specific date and time
@@ -91,8 +91,8 @@ When viewing your list, you will see these symbols:
 * Example: `mark 1`
 * Expected output: The task's checkbox changes to `[X]` (for mark) or `[]` (for unmark)
 
-    `Nice! This task is marked:
-      [T][X] read book`
+    > Nice! This task is marked:
+    >   [T][X] read book
 
 ### Deleting a Task: `delete`
 * Removes a task from your records permanently
@@ -100,9 +100,9 @@ When viewing your list, you will see these symbols:
 * Example: `delete 3`
 * Expected output: Sasa displays the removed task and the new total count
 
-    `I've removed this task:
-      [E][] exam (from: Apr 20 2026, 10:00 am to: Apr 20 2026, 12:00 pm)
-    Now you have 2 tasks in the list.`
+    > I've removed this task:
+    >   [E][] exam (from: Apr 20 2026, 10:00 am to: Apr 20 2026, 12:00 pm)
+    > Now you have 2 tasks in the list.
 
 ### Finding Tasks: `find`
 * Locates tasks that contain a specific keyword in their description
@@ -110,27 +110,29 @@ When viewing your list, you will see these symbols:
 * Example: `find assignment`
 * Expected output: A list of all tasks containing the word 'assignment'
 
-    `Here are the matching tasks:
-    2. [D][] submit assignment (by: Jan 31 2025, 11:59 pm)`
+    > Here are the matching tasks:
+    > 2. [D][] submit assignment (by: Jan 31 2025, 11:59 pm)
 
 ### Sorting Tasks: `sort`
 * Organises the list into a chronological order first by start time then end time (if applicable), todos are placed at the very end.
 * Command: `sort`
 * Expected output: Sasa reorders the tasks and displays the newly organised list
 
-    `Here are your tasks:
-    1. [D][] submit assignment (by: Jan 31 2025, 11:59 pm)
-    2. [T][X] read book`
+    > Here are your tasks:
+    > 1. [D][] submit assignment (by: Jan 31 2025, 11:59 pm)
+    > 2. [T][X] read book
 
 ---
 ## Exiting 
----
+
 * Closes the Sasa application
 * Command: `bye`
+* Expected output: Sasa acknowledges that you want to close the app
+    > Bye! Come back when you need me again!
 
 ---
 ## 🗄️ Data Storage
----
+
 Sasa automatically saves your task list after every command. The data is stored in a file named `sasa.txt` within a 
 `data` folder located in the same directory as the `.jar` file
 
