@@ -7,7 +7,7 @@
 ## 🚀 Quick Start 
 
 1. Ensure that you have **Java 17** installed on your computer
-2. Download the **latest** `sasa.jar` (v0.3) from our [releases page](https://github.com/sherylphoa/ip/releases)
+2. Download the **latest** `sasa.jar` (v0.3) from the [releases page](https://github.com/sherylphoa/ip/releases)
 3. Open a command terminal, navigate to the folder containing the file, and run: `java -jar sasa.jar`
 4. Type your commands into the text box and start making your wishes!
 
@@ -52,7 +52,9 @@ When viewing your list, you will see these symbols:
 * Expected output: Sasa confirms the addition and shows the updated total task count.
     
     > Got it. I've added this task:
+  > 
     > [T][] read book
+  > 
     > Now you have 1 task in the list.
 
 ### Adding a Deadline: `deadline`
@@ -61,9 +63,11 @@ When viewing your list, you will see these symbols:
 * Example: `deadline submit assignment /by 31/1/2025 2359`
 * Expected output: Sasa confirms the deadline and formats the dead for readability
 
-    `Got it. I've added this task:
-    [D][] submit assignment (by: Jan 31 2025, 11:59 pm)
-    Now you have 2 tasks in the list.`
+    > Got it. I've added this task:
+  > 
+    > [D][] submit assignment (by: Jan 31 2025, 11:59 pm)
+  > 
+    > Now you have 2 tasks in the list.
 
 ### Adding an Event: `event`
 * Add a task that has a specific start and end time
@@ -71,19 +75,24 @@ When viewing your list, you will see these symbols:
 * Example: `event exam /from 20/4/2026 1000 /to 20/4/2026 1200`
 * Expected output: Sasa confirms the event duration 
 
-    `Got it. I've added this task:
-    [E][] exam (from: Apr 20 2026, 10:00 am to: Apr 20 2026, 12:00 pm)
-    Now you have 3 tasks in the list.`
+    > Got it. I've added this task:
+  > 
+    > [E][] exam (from: Apr 20 2026, 10:00 am to: Apr 20 2026, 12:00 pm)
+  > 
+    > Now you have 3 tasks in the list.
 
 ### Listing all Tasks: `list`
 * Displays every task currently stored in your list with its status and type
 * Command: list
 * Expected output: A numbered list showing task types ([T], [D], [E]) and completion status ([X] for done, [] for not done)
 
-    `Here are your tasks:
-    1. [T][] read book
-    2. [D][] submit assignment (by: Jan 31 2025, 11:59 pm)
-    3. [E][] exam (from: Apr 20 2026, 10:00 am to: Apr 20 2026, 12:00 pm)`
+    > Here are your tasks:
+  > 
+    > 1.[T][] read book
+  > 
+    > 2.[D][] submit assignment (by: Jan 31 2025, 11:59 pm)
+  > 
+    > 3.[E][] exam (from: Apr 20 2026, 10:00 am to: Apr 20 2026, 12:00 pm)
 
 ### Marking / Unmarking Tasks: `mark` / `unmark`
 * Updates the completion status of a specific task
@@ -92,6 +101,7 @@ When viewing your list, you will see these symbols:
 * Expected output: The task's checkbox changes to `[X]` (for mark) or `[]` (for unmark)
 
     > Nice! This task is marked:
+  > 
     >   [T][X] read book
 
 ### Deleting a Task: `delete`
@@ -101,7 +111,9 @@ When viewing your list, you will see these symbols:
 * Expected output: Sasa displays the removed task and the new total count
 
     > I've removed this task:
+  > 
     >   [E][] exam (from: Apr 20 2026, 10:00 am to: Apr 20 2026, 12:00 pm)
+  > 
     > Now you have 2 tasks in the list.
 
 ### Finding Tasks: `find`
@@ -111,7 +123,8 @@ When viewing your list, you will see these symbols:
 * Expected output: A list of all tasks containing the word 'assignment'
 
     > Here are the matching tasks:
-    > 2. [D][] submit assignment (by: Jan 31 2025, 11:59 pm)
+  > 
+    > 2.[D][] submit assignment (by: Jan 31 2025, 11:59 pm)
 
 ### Sorting Tasks: `sort`
 * Organises the list into a chronological order first by start time then end time (if applicable), todos are placed at the very end.
@@ -119,8 +132,10 @@ When viewing your list, you will see these symbols:
 * Expected output: Sasa reorders the tasks and displays the newly organised list
 
     > Here are your tasks:
-    > 1. [D][] submit assignment (by: Jan 31 2025, 11:59 pm)
-    > 2. [T][X] read book
+  > 
+    > 1.[D][] submit assignment (by: Jan 31 2025, 11:59 pm)
+  > 
+    > 2.[T][X] read book
 
 ---
 ## Exiting 
@@ -128,6 +143,7 @@ When viewing your list, you will see these symbols:
 * Closes the Sasa application
 * Command: `bye`
 * Expected output: Sasa acknowledges that you want to close the app
+
     > Bye! Come back when you need me again!
 
 ---
