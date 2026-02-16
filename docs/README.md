@@ -76,7 +76,7 @@
 * Expected output: A list of all tasks containing the word 'assignment'
 
     Here are the matching tasks:
-    1. [D][] submit assignment (by: Jan 31 2025, 11:59 pm)
+    2. [D][] submit assignment (by: Jan 31 2025, 11:59 pm)
 
 ### Sorting Tasks: `sort`
 * Organises the list into a chronological order first by start time then end time (if applicable), todos are placed at the very end.
