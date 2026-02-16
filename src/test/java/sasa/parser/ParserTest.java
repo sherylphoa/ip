@@ -1,9 +1,10 @@
 package sasa.parser;
-
-import org.junit.jupiter.api.Test;
-import sasa.exception.SasaException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
+
+import sasa.exception.SasaException;
 
 public class ParserTest {
     @Test

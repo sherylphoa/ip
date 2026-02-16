@@ -15,6 +15,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
     private static final String FILE_PATH = "data/sasa.txt";
+    private static final String PRODUCT_NAME = "Sasa";
     private Sasa sasa = new Sasa(FILE_PATH);
 
     @Override
@@ -24,6 +25,7 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+            stage.setTitle(PRODUCT_NAME);
             fxmlLoader.<MainWindow>getController().setSasa(sasa);
             stage.show();
         } catch (IOException e) {
