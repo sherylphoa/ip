@@ -1,5 +1,6 @@
 # 🧞 Sasa User Guide
 <img src="Ui.png" width="294" height="600">
+
 **Sasa** is a lightweight, desktop-based task management assistant designed to help _you_ track to-dos, deadlines and events through an intuitive command-line interface 
 
 ---
@@ -123,12 +124,13 @@ When viewing your list, you will see these symbols:
 
 ---
 ## Exiting 
-
+---
 * Closes the Sasa application
 * Command: `bye`
 
 ---
 ## 🗄️ Data Storage
+---
 Sasa automatically saves your task list after every command. The data is stored in a file named `sasa.txt` within a 
 `data` folder located in the same directory as the `.jar` file
 
