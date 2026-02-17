@@ -59,7 +59,7 @@ When viewing your list, you will see these symbols:
 
 ### Adding a Deadline: `deadline`
 * Adds a task that needs to be done by a specific date and time
-* Command: `deadline DESCIPTION /by d/M/yyyy HHmm`
+* Command: `deadline DESCIPTION /by BYDATETIME`
 * Example: `deadline submit assignment /by 31/1/2025 2359`
 * Expected output: Sasa confirms the deadline and formats the dead for readability
 
@@ -71,7 +71,7 @@ When viewing your list, you will see these symbols:
 
 ### Adding an Event: `event`
 * Add a task that has a specific start and end time
-* Command: `event DESCRIPTION /from d/M/yyyy HHmm /to d/M/yyyy HHmm`
+* Command: `event DESCRIPTION /from STARTDATETIME /to ENDDATETIME`
 * Example: `event exam /from 20/4/2026 1000 /to 20/4/2026 1200`
 * Expected output: Sasa confirms the event duration 
 
