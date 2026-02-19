@@ -3,6 +3,9 @@ package sasa.tasks;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import sasa.exception.SasaException;
+
+
 /**
  * Represents a task that starts and ends at specified times.
  */
@@ -19,8 +22,22 @@ public class Event extends Task {
      * @param startDateTime The start time/date.
      * @param endDateTime The end time/date.
      */
-    public Event(String description, String startDateTime, String endDateTime) {
+    public Event(String description, String startDateTime, String endDateTime) throws SasaException {
         super(description);
+        try {
+            this.startDateTime = LocalDateTime.parse(startDateTime.trim(), INPUT_FORMAT);
+            this.endDateTime = LocalDateTime.parse(endDateTime.trim(), INPUT_FORMAT);
+
+            if (this.endDateTime.isBefore(this.startDateTime)) {
+                throw new SasaException("Wait! The end time cannot be before the start time.");
+            }
+            if (this.endDateTime.isEqual(this.startDateTime)) {
+                throw new SasaException("Wait! The end time is equal to the start time. Do you want to add a deadline"
+                        + " task instead?");
+            }
+        } catch (java.time.format.DateTimeParseException e) {
+            throw new SasaException("I can't understand that date. Use: d/M/yyyy HHmm");
+        }
         this.startDateTime = LocalDateTime.parse(startDateTime, INPUT_FORMAT);
         this.endDateTime = LocalDateTime.parse(endDateTime, INPUT_FORMAT);
     }

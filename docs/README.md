@@ -152,10 +152,10 @@ When viewing your list, you will see these symbols:
 Sasa automatically saves your task list after every command. The data is stored in a file named `sasa.txt` within a 
 `data` folder located in the same directory as the `.jar` file
 
-| Operating System | Default Storage Path                                          |
-| :--- |:--------------------------------------------------------------|
-| **Windows** | `C:\Users\<User>\Sasa\data\sasa.txt` (or where the .jar is run) |
-| **macOS** | `/Users/<User>/Sasa/data/sasa.txt`                              |
-| **Linux** | `/home/<User>/Sasa/data/sasa.txt`                               |
+| Operating System | Default Storage Path                                           |
+| :--- |:---------------------------------------------------------------|
+| **Windows** | `<current directory>\data\sasa.txt` (or where the .jar is run) |
+| **macOS** | `<current directory>/data/sasa.txt`                             |
+| **Linux** | `<current directory>/data/sasa.txt`                              |
 
 > ⚠️ **Important:** Do not manually edit the sasa.txt file. If the formatting is altered, Sasa may fail to load your tasks correctly on the next launch.
