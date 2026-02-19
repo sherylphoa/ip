@@ -25,6 +25,7 @@ To ensure Sasa understands your wishes, please follow these formatting guideline
 
 ### 📅 Date and Time Format
 * Sasa strictly uses the format: `d/M/yyyy HHmm`
+* For events, ENDDATETIME must be later than STARTDATETIME
 * *Example:* `31/1/2025 2359` (January 31st, 2025 at 11:59 PM).
 * Incorrect formats will trigger an error message.
 
